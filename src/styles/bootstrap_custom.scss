@@ -1,0 +1,11 @@
+@import 'var';
+/* Cursor pointer */
+.link-primary, .link-secondary {
+    cursor: pointer !important;
+}
+
+.link-secondary {
+    &:hover {
+        color: $primary !important;
+    }
+}
