@@ -1,1 +1,3 @@
-<p>home works!</p>
+@for (user of users; track user.id) {
+    <app-users [user]="user"/>
+}
