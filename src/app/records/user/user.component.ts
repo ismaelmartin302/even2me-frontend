@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { IApiResponseUser } from '../../services/models/user-api.interface';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-user',
   standalone: true,
   imports: [],
   templateUrl: './user.component.html',

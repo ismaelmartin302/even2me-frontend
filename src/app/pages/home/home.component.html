@@ -1,3 +1,5 @@
-@for (user of users; track user.id) {
-    <app-users [user]="user"/>
+@for (event of events; track event.id) {
+    @defer {
+        <app-event [event]="event"/>
+    }
 }
