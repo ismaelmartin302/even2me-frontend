@@ -7,10 +7,13 @@ import { ExploreComponent } from './pages/explore/explore.component';
 import { OptionsComponent } from './pages/options/options.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
     { path: 'search', component: ExploreComponent },
     { path: 'notifications', component: NotificationsComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'options', component: OptionsComponent },
     { path: '404', component: Error404Component },
+
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '**', redirectTo: '404', pathMatch: 'full' },
 ];

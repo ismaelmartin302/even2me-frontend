@@ -1,41 +1,41 @@
-<ul class="list position-absolute end-0">
+<ul class="list">
   <li class="p-2 d-flex">
-    <img src="assets/even2me-solid.svg" routerLink="/" class="text-decoration-none" style="width: 1.6em; cursor: pointer" title="Inicio">
+    <img src="assets/even2me-solid.svg" routerLink="/home" class="text-decoration-none" style="width: 1.6em; cursor: pointer" title="Inicio">
   </li>
-  <li class="p-2 d-flex  gap-5">
-    <a routerLink="/" class="link-secondary rounded text-decoration-none h5" title="Inicio">
+  <li class="p-2 d-flex">
+    <a routerLink="/home" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Inicio">
       <fa-icon [icon]="['fas', 'house']"></fa-icon>
-      Inicio
+      <span class="d-none d-md-flex">Inicio</span>
     </a>
   </li>
-  <li class="p-2 d-flex  gap-5">
-    <a routerLink="/search" class="link-secondary rounded text-decoration-none h5" title="Descubrir">
+  <li class="p-2 d-flex">
+    <a routerLink="/search" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Descubrir">
       <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
-      Descubrir
+      <span class="d-none d-md-flex">Descubrir</span>
     </a>
   </li>
-  <li class="p-2 d-flex  gap-5">
-    <a routerLink="/notifications" class="link-secondary rounded text-decoration-none h5" title="Notificaciones">
+  <li class="p-2 d-flex">
+    <a routerLink="/notifications" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Notificaciones">
       <fa-icon [icon]="['far', 'bell']"></fa-icon>
-      Notificaciones
+      <span class="d-none d-md-flex">Notificaciones</span>
     </a>
   </li>
-  <li class="p-2 d-flex  gap-5">
-    <a routerLink="/profile" class="link-secondary rounded text-decoration-none h5" title="Perfil">
+  <li class="p-2 d-flex">
+    <a routerLink="/profile" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Perfil">
       <fa-icon [icon]="['far', 'user']"></fa-icon>
-      Perfil
+      <span class="d-none d-md-flex">Perfil</span>
     </a>
   </li>
-  <li class="p-2 d-flex  gap-5">
-    <a routerLink="/options" class="link-secondary rounded text-decoration-none h5" title="Ajustes">
+  <li class="p-2 d-flex">
+    <a routerLink="/options" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
       <i class="bi bi-gear"></i>
-      Ajustes
+      <span class="d-none d-md-flex">Ajustes</span>
     </a>
   </li>
 </ul>
-<div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill position-absolute p-3 end-0 gap-3">
+<div routerLink="/profile" class="d-flex bottom-0 position-absolute btn rounded-pill m-3 gap-3">
   <img src="assets/images/default.svg" class="avatar-md">
-  <div class="d-flex flex-column">
+  <div class="flex-column d-none d-md-flex">
     <span class=" text-light fw-semibold">Username</span>
     <span class=" text-secondary">&#64;Username</span>
   </div>
