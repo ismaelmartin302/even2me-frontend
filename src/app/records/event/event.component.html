@@ -1,5 +1,50 @@
 @if (event) {
-{{ event.id }}
-{{ event.name }}
-{{ event.description }}
+    <hr>
+    <div class="d-flex gap-3 mt-2 mb-2">
+        <img src="assets/images/default.svg" class="avatar-sm" alt="">
+        <main class="flex-grow-1 d-flex flex-column gap-3">
+            <header class="d-flex flex-column gap-2">
+                <span>Username</span>
+                <nav class="d-flex flex-column gap-2">
+                    Titulo evento
+                    <ul class="nav justify-content-around">
+                        <li>
+                            <fa-icon [icon]="['fas', 'location-dot']"></fa-icon>
+                            Donde
+                        </li>
+                        <li>
+                            <fa-icon [icon]="['fas', 'calendar']"></fa-icon>
+                            Cuando
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                @if (true) {
+                    <img src="https://as1.ftcdn.net/v2/jpg/05/41/93/28/1000_F_541932888_PaJXmHvfQ8M8A5vlUYLOIjbW8zrOZbC4.jpg" class="img-fluid rounded-2">
+                }
+            </main>
+            <footer>
+                <nav>
+                    <ul class="nav justify-content-around">
+                        <li class="likes">
+                            <fa-icon [icon]="['far', 'heart']"></fa-icon>
+                            10.1K
+                        </li>
+                        <li class="comments">
+                            <fa-icon [icon]="['far', 'comment']"></fa-icon>
+                            1
+                        </li>
+                        <li class="retweet">
+                            <fa-icon [icon]="['fas', 'retweet']"></fa-icon>
+                            3
+                        </li>
+                        <li class="share">
+                            <i class="bi bi-share"></i>
+                        </li>
+                    </ul>
+                </nav>
+            </footer>
+        </main>
+    </div>
 }

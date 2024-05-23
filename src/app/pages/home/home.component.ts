@@ -6,11 +6,12 @@ import { UserComponent } from '../../records/user/user.component';
 import { IApiResponseEvent } from '../../services/models/event-api.interface';
 import { EventsApiService } from '../../services/events-api.service';
 import { EventComponent } from '../../records/event/event.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HttpClientModule, EventComponent],
+  imports: [HttpClientModule, EventComponent, FontAwesomeModule],
   providers: [EventsApiService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
