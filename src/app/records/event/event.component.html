@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/@github/relative-time-element"></script>
 @if (event) {
     <hr>
     <div class="d-flex gap-3 mt-2 mb-2">
@@ -6,21 +7,23 @@
             <header class="d-flex flex-column gap-2">
                 <span>Username</span>
                 <nav class="d-flex flex-column gap-2">
-                    Titulo evento
-                    <ul class="nav justify-content-around">
+                    {{event.name}}
+                    <ul class="nav justify-content-start">
                         <li>
                             <fa-icon [icon]="['fas', 'location-dot']"></fa-icon>
-                            Donde
+                            {{ event.location }}
                         </li>
+                        <hr>
                         <li>
                             <fa-icon [icon]="['fas', 'calendar']"></fa-icon>
-                            Cuando
+                                {{event.starts_at | date:"d MMMM h:mm a" }}
+                                {{event.finish_in | date:"d MMMM h:mm a" }}
                         </li>
                     </ul>
                 </nav>
             </header>
             <main>
-                @if (true) {
+                @if (event.picture) {
                     <img src="https://as1.ftcdn.net/v2/jpg/05/41/93/28/1000_F_541932888_PaJXmHvfQ8M8A5vlUYLOIjbW8zrOZbC4.jpg" class="img-fluid rounded-2">
                 }
             </main>
