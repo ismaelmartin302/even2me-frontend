@@ -4,13 +4,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-menu',
   standalone: true,
   imports: [FontAwesomeModule, RouterLink],
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class MenuComponent implements OnInit {
   constructor(private renderer: Renderer2, private router: Router, private el: ElementRef) {}
 
   ngOnInit(): void {

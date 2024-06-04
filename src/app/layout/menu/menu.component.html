@@ -1,42 +1,34 @@
-<ul class="list">
-  <li class="p-2 d-flex">
-    <img src="assets/even2me-solid.svg" routerLink="/home" class="text-decoration-none" style="width: 1.6em; cursor: pointer" title="Inicio">
-  </li>
-  <li class="p-2 d-flex">
+<ul class="nav justify-content-around">
+  <li>
     <a routerLink="/home" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Inicio">
       <fa-icon [icon]="['fas', 'house']"></fa-icon>
-      <span class="d-none d-md-flex">Inicio</span>
     </a>
   </li>
-  <li class="p-2 d-flex">
+  <li>
     <a routerLink="/search" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Descubrir">
       <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
-      <span class="d-none d-md-flex">Descubrir</span>
     </a>
   </li>
-  <li class="p-2 d-flex">
+  <li>
     <a routerLink="/notifications" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Notificaciones">
       <fa-icon [icon]="['far', 'bell']"></fa-icon>
-      <span class="d-none d-md-flex">Notificaciones</span>
     </a>
   </li>
-  <li class="p-2 d-flex">
+  <li>
     <a routerLink="/profile" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Perfil">
       <fa-icon [icon]="['far', 'user']"></fa-icon>
-      <span class="d-none d-md-flex">Perfil</span>
     </a>
   </li>
-  <li class="p-2 d-flex">
+  <li>
     <a routerLink="/options" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
       <i class="bi bi-gear"></i>
-      <span class="d-none d-md-flex">Ajustes</span>
     </a>
   </li>
 </ul>
-<div routerLink="/profile" class="d-flex bottom-0 position-absolute btn rounded-pill m-3 gap-3">
+<!-- <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill m-3 gap-3">
   <img src="assets/images/default.svg" class="avatar-md">
   <div class="flex-column d-none d-md-flex">
     <span class=" text-light fw-semibold">Username</span>
     <span class=" text-secondary">&#64;Username</span>
   </div>
-</div>
+</div> -->

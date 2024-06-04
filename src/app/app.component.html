@@ -1,14 +1,25 @@
+
 <div class="container">
     <div class="row">
-        <div class="col flex-grow-0 d-none d-sm-block border-end">
-            <app-sidebar></app-sidebar>
+        <div class="col flex-grow-0 d-none d-sm-block"> 
+
         </div>
-        <div class="col flex-grow-1 col-sm-5">
+        <div class="col flex-grow-1">
             <router-outlet></router-outlet>
         </div>
-        <div class="col-sm d-none d-xl-block border-start">
-            <!-- MENU NOTICIAS Y BARRA DE BUSQUEDA -->
+        <div class="col-sm d-none d-xl-block">
+        
         </div>
     </div>
-    <!-- MENU MOVIL -->
+    <div class="row bg-black fixed-bottom pe-5 ps-5"> 
+        <div class="col flex-grow-0 d-none d-sm-block"> 
+
+        </div>
+        <div class="col ps-0 flex-grow-1 border-top pt-3 pb-2 pb-lg-3 pt-lg-4">
+            <app-menu class="bg-black z-1"></app-menu>
+        </div>
+        <div class="col-sm d-none d-xl-block">
+        
+        </div>
+    </div>
 </div>

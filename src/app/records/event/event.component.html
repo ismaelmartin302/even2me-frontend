@@ -5,10 +5,10 @@
         <img src="assets/images/default.svg" class="avatar-sm" alt="">
         <main class="flex-grow-1 d-flex flex-column gap-3">
             <header class="d-flex flex-column gap-2">
-                <span>Username</span>
+                <span class="fw-bold">Username</span>
                 <nav class="d-flex flex-column gap-2">
-                    {{event.name}}
-                    <ul class="nav justify-content-start">
+                    <span class="fw-bold">{{event.name}}</span>
+                    <ul class="nav justify-content-lg-around justify-content-center gap-1 border rounded-pill p-2 pt-2 pt-lg-3 bg-dark border-secondary">
                         <li>
                             <fa-icon [icon]="['fas', 'location-dot']"></fa-icon>
                             {{ event.location }}
@@ -17,15 +17,17 @@
                         <li>
                             <fa-icon [icon]="['fas', 'calendar']"></fa-icon>
                                 {{event.starts_at | date:"d MMMM h:mm a" }}
+                                -
                                 {{event.finish_in | date:"d MMMM h:mm a" }}
                         </li>
                     </ul>
                 </nav>
             </header>
-            <main>
-                @if (event.picture) {
+            <main class="d-flex flex-column gap-2">
+                {{event.description}}
+                <!-- @if (event.picture) { -->
                     <img src="https://as1.ftcdn.net/v2/jpg/05/41/93/28/1000_F_541932888_PaJXmHvfQ8M8A5vlUYLOIjbW8zrOZbC4.jpg" class="img-fluid rounded-2">
-                }
+                <!-- } -->
             </main>
             <footer>
                 <nav>
