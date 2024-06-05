@@ -9,3 +9,11 @@
         color: $primary !important;
     }
 }
+
+.btn-primary {
+    transition: 300ms;
+    &:hover {
+        background-color: darken($primary, 5%);
+        transition: 300ms;   
+    }
+}

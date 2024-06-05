@@ -5,7 +5,7 @@
             <img src="assets/even2me-solid.svg" class="img-fluid mt-3 position-fixed" style="width: 2em;">
         </div>
         <div class="col-4 flex-grow-1">
-            <router-outlet></router-outlet>
+            <!-- <router-outlet></router-outlet> -->
         </div>
         <div class="col-sm d-none d-xl-block">
         
@@ -26,8 +26,10 @@
         <div class="col-4 flex-grow-1 border-top pt-3 pb-2 pb-lg-3 pt-lg-4">
             <app-menu class="bg-black z-1"></app-menu>
         </div>
-        <div class="col-sm d-none d-xl-block">
-        
+        <div class="col-sm d-none d-xl-flex justify-content-center">
+            @if (true) {
+                <button class="rounded-circle btn btn-primary publicar_boton d-flex gap-2 align-items-center" style="width: 3em; height: 3em;"> <fa-icon [icon]="['fas', 'plus']" class="fs-4"></fa-icon> <span class="fw-bold">Publicar</span> </button>
+            }
         </div>
     </div>
 </div>

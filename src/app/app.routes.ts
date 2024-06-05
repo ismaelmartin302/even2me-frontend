@@ -19,6 +19,6 @@ export const routes: Routes = [
     { path: 'options', component: OptionsComponent },
     { path: '404', component: Error404Component },
 
-    { path: '', component : HomeComponent, canActivate: [authGuard]},
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: '404', pathMatch: 'full' },
 ];
