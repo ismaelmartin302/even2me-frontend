@@ -1,26 +1,50 @@
 <ul class="nav justify-content-around">
   <li>
+    @if (this.router.url == '/home') {
+    <a routerLink="/home" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Inicio">
+      <fa-icon [icon]="['fas', 'house']"></fa-icon>
+    </a>
+    } @else {
     <a routerLink="/home" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Inicio">
       <fa-icon [icon]="['fas', 'house']"></fa-icon>
     </a>
+    }
   </li>
   <li>
+    @if (this.router.url == '/search') {
+    <a routerLink="/search" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Descubrir">
+      <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+    </a>
+    } @else {
     <a routerLink="/search" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Descubrir">
       <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
     </a>
+    }
   </li>
   <li class="d-block d-xl-none">
-    <button class="rounded-circle btn btn-primary d-flex gap-2 align-items-center" style="width: 3em; height: 3em;"> <fa-icon [icon]="['fas', 'plus']" class="fs-4"></fa-icon></button>
+    <button class="rounded-circle btn btn-primary d-flex gap-2 align-items-center" style="width: 3em; height: 3em;">
+      <fa-icon [icon]="['fas', 'plus']" class="fs-4"></fa-icon></button>
   </li>
   <li>
+    @if (this.router.url == '/profile') {
+    <a routerLink="/profile" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Perfil">
+      <fa-icon [icon]="['far', 'user']"></fa-icon>
+    </a>
+    } @else {
     <a routerLink="/profile" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Perfil">
       <fa-icon [icon]="['far', 'user']"></fa-icon>
     </a>
+    }
   </li>
   <li>
+    @if (this.router.url == '/options') {
+    <a routerLink="/options" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
+      <i class="bi bi-gear"></i>
+    </a>
+    } @else {
     <a routerLink="/options" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
       <i class="bi bi-gear"></i>
     </a>
+    }
   </li>
 </ul>
-

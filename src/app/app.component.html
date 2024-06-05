@@ -1,19 +1,22 @@
 
 <div class="container">
     <div class="row">
-        <div class="col flex-grow-1 d-none d-sm-block"> 
-            <img src="assets/even2me-solid.svg" class="img-fluid mt-3 position-fixed" style="width: 2em;">
+        <div class="col flex-grow-1 d-none d-sm-block mt-3 position-fixed start-0 ms-5"> 
+            <img src="assets/even2me-solid.svg" class="img-fluid" style="width: 2em;">
+        </div>
+        <div class="col flex-grow-1 d-none d-sm-block mt-3"> 
+
         </div>
         <div class="col-4 flex-grow-1">
-            <!-- <router-outlet></router-outlet> -->
+            <router-outlet></router-outlet>
         </div>
         <div class="col-sm d-none d-xl-block">
-        
+            
         </div>
     </div>
     <div class="row bg-black fixed-bottom pe-5 ps-5"> 
         <div class="col flex-grow-1 d-none d-sm-block">
-            @if (true) {
+            @if (true && this.router.url != '/profile') {
                 <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill m-3 gap-3">
                     <img src="assets/images/default.svg" class="avatar-md">
                     <div class="flex-column d-none d-md-flex">

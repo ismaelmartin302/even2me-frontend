@@ -11,7 +11,13 @@ import { DatePipe } from '@angular/common';
   styleUrl: './event.component.scss'
 })
 export class EventComponent {
-
+  imagen_visible: boolean = false;
   @Input({ required: true }) event?: IApiResponseEvent;
+  ocultar_imagen() {
+    this.imagen_visible = false;
+  }
 
+  mostrar_imagen() {
+    this.imagen_visible = true;
+  }
 }

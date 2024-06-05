@@ -25,7 +25,11 @@
             <main class="d-flex flex-column gap-2">
                 {{event.description}}
                 @if (event.picture) {
-                    <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2">
+                    <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;" (click)="mostrar_imagen()">
+                    @if (imagen_visible) {
+                        <div class="w-100 h-100 position-fixed bg-black opacity-25  top-0 end-0 bottom-0 start-0 m-auto z-2" (click)="ocultar_imagen()"></div>
+                        <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 position-fixed top-0 end-0 bottom-0 start-0 m-auto z-3" (click)="ocultar_imagen()">
+                    }
                 }
             </main>
             <footer>
