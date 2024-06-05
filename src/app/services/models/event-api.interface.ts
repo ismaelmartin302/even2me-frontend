@@ -1,3 +1,5 @@
+import { Obj } from "@popperjs/core";
+
 export interface IApiResponseEvent {
     id: number,
     user_id: number,
@@ -14,4 +16,9 @@ export interface IApiResponseEvent {
     finish_in: string,
     created_at: string,
     updated_at: string,
+    comments_count: number,
+    reposts_count: number,
+    likes_count: number,
+    comments: Array<object>,
+    user: Obj,
 }

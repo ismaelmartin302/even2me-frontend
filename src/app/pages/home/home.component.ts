@@ -12,15 +12,22 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   selector: 'app-home',
   standalone: true,
   imports: [HttpClientModule, EventComponent, FontAwesomeModule],
-  providers: [EventsApiService],
+  providers: [EventsApiService, UsersApiService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
 
   private readonly _eventsApiService = inject(EventsApiService)
+  private readonly _usersApiService = inject(UsersApiService)
   events: IApiResponseEvent[] = [];
+  users: IApiResponseUser[] = [];
   ngOnInit(): void {
-      this._eventsApiService.getEvents().subscribe((data) => (this.events = data))
+    this._eventsApiService.getEvents().subscribe((events) => {
+      this.events = events;
+    });
+    this._usersApiService.getUsers().subscribe((users) => {
+      this.users = users
+    });
   }
 }

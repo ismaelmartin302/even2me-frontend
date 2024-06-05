@@ -5,8 +5,13 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { OptionsComponent } from './pages/options/options.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'home', component: HomeComponent },
     { path: 'search', component: ExploreComponent },
     { path: 'notifications', component: NotificationsComponent },
@@ -14,6 +19,6 @@ export const routes: Routes = [
     { path: 'options', component: OptionsComponent },
     { path: '404', component: Error404Component },
 
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '', component : HomeComponent, canActivate: [authGuard]},
     { path: '**', redirectTo: '404', pathMatch: 'full' },
 ];

@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="col flex-grow-1 d-none d-sm-block"> 
-
+            <img src="assets/even2me-solid.svg" class="img-fluid mt-3 position-fixed" style="width: 2em;">
         </div>
         <div class="col-4 flex-grow-1">
             <router-outlet></router-outlet>
@@ -12,14 +12,16 @@
         </div>
     </div>
     <div class="row bg-black fixed-bottom pe-5 ps-5"> 
-        <div class="col flex-grow-1 d-none d-sm-block"> 
-            <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill m-3 gap-3">
-                <img src="assets/images/default.svg" class="avatar-md">
-                <div class="flex-column d-none d-md-flex">
-                    <span class=" text-light fw-semibold">Username</span>
-                    <span class=" text-secondary">&#64;Username</span>
+        <div class="col flex-grow-1 d-none d-sm-block">
+            @if (true) {
+                <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill m-3 gap-3">
+                    <img src="assets/images/default.svg" class="avatar-md">
+                    <div class="flex-column d-none d-md-flex">
+                        <span class=" text-light fw-semibold">Username</span>
+                        <span class=" text-secondary">&#64;Username</span>
+                    </div>
                 </div>
-            </div>
+            } 
         </div>
         <div class="col-4 flex-grow-1 border-top pt-3 pb-2 pb-lg-3 pt-lg-4">
             <app-menu class="bg-black z-1"></app-menu>
