@@ -1,0 +1,17 @@
+@import 'var';
+.header_profile {
+    height: 20em;
+}
+
+
+.mostrar-mas {
+    color: $secondary !important;
+    background-color: blue !important;
+}
+
+// @media (width <= 575px) {
+    
+//     .header_profile {
+//         height: 10em;
+//     }
+// }

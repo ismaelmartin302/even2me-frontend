@@ -1,5 +1,10 @@
-.avatar-lg, .avatar-md, .avatar-sd {
+.avatar-xl, .avatar-lg, .avatar-md, .avatar-sd {
     border-radius: 50%;
+    object-fit: cover;
+}
+.avatar-xl {
+    width: 8em;
+    height: 8em;
 }
 .avatar-lg {
     width: 4em;
@@ -10,4 +15,8 @@
 }.avatar-sm {
     width: 2em;
     height: 2em;
+}
+
+.clickable {
+    cursor: pointer !important;
 }

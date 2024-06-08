@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBell as farBell, faComment as farComment, faCalendar as farCalendar, faHeart as farHeart, faUser as farUser, faCalendarXmark as farCalendarXmark } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faBell, faCalendar, faCalendarXmark, faComment, faHeart, faHouse, faLink, faLocationDot, faMagnifyingGlass, faPlus, faRetweet, faUser, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-root',
   standalone: true,
   providers: [UsersApiService],
-  imports: [RouterOutlet, FontAwesomeModule, MenuComponent, HttpClientModule],
+  imports: [RouterOutlet, FontAwesomeModule, MenuComponent, HttpClientModule, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

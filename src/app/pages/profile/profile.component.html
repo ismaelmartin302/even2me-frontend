@@ -1,1 +1,29 @@
-<p>profile works!</p>
+<header>
+    <img src="http://127.0.0.1:8000/storage/defaultbanner.png" class="img-fluid position-absolute top-0 start-0 w-100 pb-5 d-block d-sm-none object-fit-cover">
+    <nav class="position-relative header_profile">
+        <img src="http://127.0.0.1:8000/storage/defaultbanner.png" class="img-fluid position-absolute top-0 start-0 w-100 h-100 d-none d-sm-block pb-5 object-fit-cover">
+        <div class="position-absolute bottom-0 start-0 ms-3">
+            <img src="http://127.0.0.1:8000/storage/default.png" class="avatar-xl border border-2 p-1 border-black bg-black ">
+        </div>
+    </nav>
+    <div class="d-flex flex-column gap-2">
+        <span class="h5 fw-bold ms-2 mt-2 text-primary">Useewqewqewrname</span>
+        <div>
+            <div>
+                <span [innerHTML]="getBiography()" (click)="toggleExpand()" class="cursor-pointer"></span>
+              </div>
+        </div>
+        <ul class="text-secondary d-flex list-unstyled gap-2 flex-wrap">
+            <li>
+                <fa-icon [icon]="['fas', 'location-dot']"></fa-icon>
+                Location
+            </li>
+        </ul>
+
+        <ul class="d-flex gap-3 justify-content-around list-unstyled">
+            <li><span class="text-primary">214</span> Eventos</li>
+            <li><span class="text-primary">214</span> Seguidores</li>
+            <li><span class="text-primary">214</span> Siguiendo</li>
+        </ul>
+    </div>
+</header>
