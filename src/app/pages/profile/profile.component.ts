@@ -117,4 +117,14 @@ export class ProfileComponent {
   goToUserProfile(username: string): void {
     this.router.navigate(['/user', username]);
   }
+  closePopupOutside(event: Event, popupType: 'followers' | 'followings'): void {
+    const popupContent = (event.target as HTMLElement).closest('.popup-content');
+    if (!popupContent) {
+      if (popupType === 'followers') {
+        this.showFollowersPopup = false;
+      } else {
+        this.showFollowingsPopup = false;
+      }
+    }
+  }
 }

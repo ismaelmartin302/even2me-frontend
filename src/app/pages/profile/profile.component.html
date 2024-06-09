@@ -37,36 +37,64 @@
     </section>
     <section>
         @if (showFollowersPopup) {
-            <div class="popup">
+            <div class="popup" (click)="closePopupOutside($event, 'followers')">
                 <div class="popup-content">
                     <span class="close" (click)="toggleFollowersPopup()">&times;</span>
                     <h2>Seguidores</h2>
-                    <ul class="list-unstyled gap-2 d-flex flex-column">
-                        @for (follower of followers; track follower.id) {
-                            <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(follower.follower.username)">
-                                <img src="{{'http://127.0.0.1:8000/storage/' + follower.follower.avatar}}" class="avatar-sm">
-                                <span class="text-white">{{ follower.follower.nickname }}</span>
-                            </li>
-                        }
-                    </ul>
+                    <div class="scrollable">
+                        <ul class="list-unstyled gap-2 d-flex flex-column">
+                            @for (follower of followers; track follower.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(follower.follower.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + follower.follower.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ follower.follower.nickname }}</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         }
     </section>
     <section>
         @if (showFollowingsPopup) {
-            <div class="popup">
+            <div class="popup" (click)="closePopupOutside($event, 'followings')">
                 <div class="popup-content">
                     <span class="close" (click)="toggleFollowingsPopup()">&times;</span>
                     <h2>Siguiendo</h2>
-                    <ul class="list-unstyled gap-2 d-flex flex-column">
-                        @for (following of followings; track following.id) {
-                            <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(following.following.username)">
-                                <img src="{{'http://127.0.0.1:8000/storage/' + following.following.avatar}}" class="avatar-sm">
-                                <span class="text-white">{{ following.following.nickname }}</span>
-                            </li>
-                        }
-                    </ul>
+                    <div class="scrollable">
+                        <ul class="list-unstyled gap-2 d-flex flex-column">
+                            @for (following of followings; track following.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(following.following.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + following.following.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ following.following.nickname }}</span>
+                                </li>
+                            }
+                            @for (following of followings; track following.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(following.following.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + following.following.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ following.following.nickname }}</span>
+                                </li>
+                            }
+                            @for (following of followings; track following.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(following.following.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + following.following.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ following.following.nickname }}</span>
+                                </li>
+                            }
+                            @for (following of followings; track following.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(following.following.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + following.following.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ following.following.nickname }}</span>
+                                </li>
+                            }
+                            @for (following of followings; track following.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(following.following.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + following.following.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ following.following.nickname }}</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         }

@@ -20,3 +20,18 @@
 .clickable {
     cursor: pointer !important;
 }
+
+/* ===== Scrollbar CSS ===== */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: $primary #00000000;
+  }
+
+
+  *::-webkit-scrollbar-track {
+    background: #00000000;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: $primary;
+  }
