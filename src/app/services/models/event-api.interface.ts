@@ -20,5 +20,9 @@ export interface IApiResponseEvent {
     reposts_count: number,
     likes_count: number,
     comments: Array<object>,
-    user: Obj,
+    user: {
+        id: number,
+        username: string,
+        avatar: string,
+    }
 }

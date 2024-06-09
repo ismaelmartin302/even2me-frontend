@@ -76,6 +76,10 @@ export class ProfileComponent {
   loadUserEvents(): void {
     this.usersApiService.getUserEvents(this.username).subscribe(
       data => {
+        for (let valor = 0; valor < data.length; valor++) {
+          let element = data[valor];
+          console.log(element)
+        }
         this.events = data;
       },
       error => {
@@ -88,7 +92,6 @@ export class ProfileComponent {
     this.usersApiService.getUserFollowers(this.username).subscribe(
       data => {
         this.followers = data;
-        console.log(data)
       },
       error => {
         console.error('Error fetching user followers', error);
