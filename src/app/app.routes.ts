@@ -19,6 +19,9 @@ export const routes: Routes = [
     { path: 'options', component: OptionsComponent },
     { path: '404', component: Error404Component },
 
+    { path: 'user/:username', component: ProfileComponent },
+
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: '404', pathMatch: 'full' },
+
 ];
