@@ -1,0 +1,47 @@
+<div class="container mt-4">
+    <h2>Create Event</h2>
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" class="form-control" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" class="form-control" formControlName="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input id="location" class="form-control" formControlName="location">
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" type="number" class="form-control" formControlName="price">
+      </div>
+      <div class="form-group">
+        <label for="capacity">Capacity</label>
+        <input id="capacity" type="number" class="form-control" formControlName="capacity">
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <input id="category" class="form-control" formControlName="category">
+      </div>
+      <div class="form-group">
+        <label for="picture">Picture URL</label>
+        <input id="picture" class="form-control" formControlName="picture">
+      </div>
+      <div class="form-group">
+        <label for="website">Website</label>
+        <input id="website" class="form-control" formControlName="website">
+      </div>
+      <div class="form-group">
+        <label for="starts_at">Starts At</label>
+        <input id="starts_at" type="datetime-local" class="form-control" formControlName="starts_at">
+      </div>
+      <div class="form-group">
+        <label for="finish_in">Finish In</label>
+        <input id="finish_in" type="datetime-local" class="form-control" formControlName="finish_in">
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">Create Event</button>
+    </form>
+  </div>
+  

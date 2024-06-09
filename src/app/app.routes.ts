@@ -8,6 +8,7 @@ import { OptionsComponent } from './pages/options/options.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { authGuard } from './auth.guard';
+import { PublishComponent } from './records/event/publish/publish.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ export const routes: Routes = [
     { path: '404', component: Error404Component },
 
     { path: 'user/:username', component: ProfileComponent },
+    { path: 'post', component: PublishComponent },
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: '404', pathMatch: 'full' },

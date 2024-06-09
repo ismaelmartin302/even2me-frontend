@@ -28,4 +28,17 @@ export class UsersApiService {
   getUserFollowings(username: string): Observable<IApiResponseFollowing[]> {
     return this.httpClient.get<IApiResponseFollowing[]>(`${this.url}users/nick/${username}/followings`);
   }
+
+  createEvent(eventData: IApiResponseEvent): Observable<IApiResponseEvent> {
+    return this.httpClient.post<IApiResponseEvent>(this.url + 'events', eventData);
+  }
+  likeEvent(eventId: number, userId: number): Observable<any> {
+    return this.httpClient.post(`${this.url}events/${eventId}/like`, { user_id: userId });
+  }
+
+  unlikeEvent(eventId: number, userId: number): Observable<any> {
+    return this.httpClient.request('delete', `${this.url}events/${eventId}/like`, {
+      body: { user_id: userId }
+    });
+  }
 }

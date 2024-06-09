@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { IApiResponseEvent } from "./models/event-api.interface";
+import { Observable } from "rxjs";
 
 export class EventsApiService {
 
