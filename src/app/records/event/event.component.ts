@@ -16,7 +16,9 @@ export class EventComponent {
   imagen_visible: boolean = false;
   userId: number = 2;
   @Input({ required: true }) event?: IApiResponseEvent;
+
   constructor(private router: Router, private usersApiService: UsersApiService) {}
+
   ocultar_imagen() {
     this.imagen_visible = false;
   }
@@ -24,35 +26,50 @@ export class EventComponent {
   mostrar_imagen() {
     this.imagen_visible = true;
   }
+
   goToUserProfile(username: string): void {
     this.router.navigate(['/user', username]);
   }
 
   isLiked(): boolean {
-    return !!(this.event && this.event.likes && this.event.likes.some((like: { id: number }) => like.id === this.userId));
-}
+    return !!(this.event?.likes?.some((like: { id: number }) => like.id === this.userId));
+  }
 
-toggleLike(): void {
-    console.log(this.event);
+  toggleLike(): void {
     if (this.event && this.event.likes) {
-        if (this.isLiked()) {
-            this.usersApiService.unlikeEvent(this.event.id, this.userId).subscribe(() => {
-                if (this.event && this.event.likes) {
-                    this.event.likes = this.event.likes.filter(like => like.id !== this.userId);
-                    this.event.likes_count--;
-                }
-            });
+        const wasLiked = this.isLiked();
+
+        // Actualización optimista del UI
+        if (wasLiked) {
+            this.event.likes = this.event.likes.filter(like => like.id !== this.userId);
+            this.event.likes_count = (this.event.likes_count ?? 0) - 1;
         } else {
-            this.usersApiService.likeEvent(this.event.id, this.userId).subscribe(() => {
-                if (this.event && this.event.likes) {
-                    this.event.likes.push({ id: this.userId, username: 'current_user' });
-                    this.event.likes_count++;
-                }
-            });
+            this.event.likes.push({ id: this.userId, username: 'current_user' });
+            this.event.likes_count = (this.event.likes_count ?? 0) + 1;
         }
+
+        // Hacer la llamada al servidor
+        const likeObservable = wasLiked
+            ? this.usersApiService.unlikeEvent(this.event.id!, this.userId)
+            : this.usersApiService.likeEvent(this.event.id!, this.userId);
+
+        likeObservable.subscribe({
+            next: () => {
+                // La llamada al servidor fue exitosa, no hacer nada adicional
+            },
+            error: () => {
+                // Revertir cambios en caso de error
+                if (this.event && this.event.likes) {
+                    if (wasLiked) {
+                        this.event.likes.push({ id: this.userId, username: 'current_user' });
+                        this.event.likes_count = (this.event.likes_count ?? 0) + 1;
+                    } else {
+                        this.event.likes = this.event.likes.filter(like => like.id !== this.userId);
+                        this.event.likes_count = (this.event.likes_count ?? 0) - 1;
+                    }
+                }
+            }
+        });
     }
 }
-
-
-
 }
