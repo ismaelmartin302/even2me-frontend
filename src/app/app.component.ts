@@ -7,17 +7,21 @@ import { MenuComponent } from './layout/menu/menu.component';
 import { IApiResponseUser } from './services/models/user-api.interface';
 import { UsersApiService } from './services/users-api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  providers: [UsersApiService],
+  providers: [UsersApiService, AuthService],
   imports: [RouterOutlet, FontAwesomeModule, MenuComponent, HttpClientModule, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  constructor(library: FaIconLibrary, public router: Router, private cdr: ChangeDetectorRef) {
+  isLoggedIn: boolean = false;
+  user: any = null;
+  loading: boolean = true;
+  constructor(library: FaIconLibrary, public router: Router, private cdr: ChangeDetectorRef, private authService: AuthService) {
     library.addIcons(farHeart, farUser, farComment, farCalendarXmark, farCalendar, farBell);
     library.addIcons(faHeart, faUser, faLink, faRetweet, faCalendarXmark, faComment, faCalendar, faBell, faPlus, faHouse, faUserPlus, faUserMinus, faMagnifyingGlass, faLocationDot, faBars);
   }
@@ -33,5 +37,16 @@ export class AppComponent {
       this.cdr.detectChanges();
       console.log(this.currentUrl)
     });
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.authService.getUser().subscribe(user => {
+        this.user = user;
+        this.loading = false;
+      }, () => {
+        this.loading = false;
+      });
+    } else {
+      this.loading = false;
+    }
   }
 } 

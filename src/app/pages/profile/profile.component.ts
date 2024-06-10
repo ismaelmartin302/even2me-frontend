@@ -6,6 +6,7 @@ import { UsersApiService } from '../../services/users-api.service';
 import { IApiResponseFollower, IApiResponseFollowing, IApiResponseUser } from '../../services/models/user-api.interface';
 import { IApiResponseEvent } from '../../services/models/event-api.interface';
 import { EventComponent } from '../../records/event/event.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile',

@@ -16,13 +16,11 @@
     </div>
     <div class="row bg-black fixed-bottom pe-5 ps-5"> 
         <div class="col flex-grow-1 d-none d-sm-block">
-            @if (true && this.router.url != '/profile') {
-                <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill m-3 gap-3">
-                    <img src="assets/images/default.svg" class="avatar-md">
-                    <div class="flex-column d-none d-md-flex">
-                        <span class=" text-light fw-semibold">Username</span>
-                        <span class=" text-secondary">&#64;Username</span>
-                    </div>
+            @if (isLoggedIn && this.router.url != '/profile') {
+                <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill align-items-center m-3 gap-3">
+                    <img [src]="user?.avatar ? 'http://127.0.0.1:8000/storage/' + user.avatar : 'http://127.0.0.1:8000/storage/default.png'"
+                    class="avatar-md">
+                    <span class=" text-light fw-semibold">{{user?.username}}</span>
                 </div>
             } 
         </div>
@@ -30,7 +28,7 @@
             <app-menu class="bg-black z-1"></app-menu>
         </div>
         <div class="col-sm d-none d-xl-flex justify-content-center">
-            @if (true) {
+            @if (isLoggedIn) {
                 <button routerLink="/post" class="rounded-circle btn btn-primary publicar_boton d-flex gap-2 align-items-center" style="width: 3em; height: 3em;"> <fa-icon [icon]="['fas', 'plus']" class="fs-4"></fa-icon> <span class="fw-bold">Publicar</span> </button>
             }
         </div>
