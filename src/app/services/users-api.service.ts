@@ -16,6 +16,9 @@ export class UsersApiService {
   getUserByUsername(username: string): Observable<IApiResponseUser> {
     return this.httpClient.get<IApiResponseUser>(`${this.url}users/nick/${username}`);
   }
+  getUserByID(id: number): Observable<IApiResponseUser> {
+    return this.httpClient.get<IApiResponseUser>(`${this.url}users/${id}`);
+  }
 
   getUserEvents(username: string): Observable<IApiResponseEvent[]> {
     return this.httpClient.get<IApiResponseEvent[]>(`${this.url}users/nick/${username}/events`);

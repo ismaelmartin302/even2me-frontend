@@ -1,47 +1,85 @@
-<div class="container mt-4">
-    <h2>Create Event</h2>
-    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" class="form-control" formControlName="name">
+<div class="container border-0 mt-4">
+  <div class="card bg-black p-4 shadow-sm">
+    <div class="card-header bg-black d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <img src="{{'http://127.0.0.1:8000/storage/' + user?.avatar}}" class="avatar-sm rounded-circle me-3" alt="User Avatar">
+        <span class="fw-bold">Crear Evento</span>
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" class="form-control" formControlName="description"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="location">Location</label>
-        <input id="location" class="form-control" formControlName="location">
-      </div>
-      <div class="form-group">
-        <label for="price">Price</label>
-        <input id="price" type="number" class="form-control" formControlName="price">
-      </div>
-      <div class="form-group">
-        <label for="capacity">Capacity</label>
-        <input id="capacity" type="number" class="form-control" formControlName="capacity">
-      </div>
-      <div class="form-group">
-        <label for="category">Category</label>
-        <input id="category" class="form-control" formControlName="category">
-      </div>
-      <div class="form-group">
-        <label for="picture">Picture URL</label>
-        <input id="picture" class="form-control" formControlName="picture">
-      </div>
-      <div class="form-group">
-        <label for="website">Website</label>
-        <input id="website" class="form-control" formControlName="website">
-      </div>
-      <div class="form-group">
-        <label for="starts_at">Starts At</label>
-        <input id="starts_at" type="datetime-local" class="form-control" formControlName="starts_at">
-      </div>
-      <div class="form-group">
-        <label for="finish_in">Finish In</label>
-        <input id="finish_in" type="datetime-local" class="form-control" formControlName="finish_in">
-      </div>
-      <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">Create Event</button>
-    </form>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <input id="name" class="form-control bg-black rounded-4" placeholder="Nombre del Evento" formControlName="name">
+        </div>
+        <div class="mb-3">
+          <textarea class="form-control bg-black rounded-4" placeholder="Descripción" formControlName="description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <input id="location" class="form-control bg-black rounded-4" placeholder="Ubicación" formControlName="location">
+        </div>
+        <div class="mb-3">
+          <input id="price" type="number" class="form-control bg-black rounded-4" placeholder="Precio" formControlName="price">
+        </div>
+        <label for="capacity">Capacidad</label>
+        <div class="d-flex gap-3 mb-3" role="group">
+          <input type="radio" class="btn-check" id="unlimited" formControlName="capacity" value="0" (change)="onCapacityChange('0')">
+          <label class="btn btn-outline-info rounded-pill w-100" for="unlimited">Ilimitada</label>
+
+          <input type="radio" class="btn-check" id="ten" formControlName="capacity" value="10" (change)="onCapacityChange('10')">
+          <label class="btn btn-outline-success rounded-pill w-100" for="ten">10 <fa-icon [icon]="['fas', 'user']"></fa-icon> </label>
+
+          <input type="radio" class="btn-check" id="hundred" formControlName="capacity" value="100" (change)="onCapacityChange('100')">
+          <label class="btn btn-outline-danger rounded-pill w-100" for="hundred">100 <fa-icon [icon]="['fas', 'user']"></fa-icon> </label>
+
+        @if (customCapacitySelected) {
+            <input id="customCapacity" type="number" class="btn btn-primary rounded-pill w-100" formControlName="capacity">
+            } @else {
+              <input type="radio" class="btn-check" id="custom" formControlName="capacity" value="personalizada" (change)="onCapacityChange('personalizada')">
+              <label class="btn btn-outline-primary rounded-pill w-100" for="custom">Personalizada</label>
+      }
+          </div>
+        <div class="mb-3">
+          <select id="category" class="form-select bg-black rounded-4" formControlName="category">
+            <option value="" disabled selected>Seleccionar Categoría</option>
+            <option value="Música">Música</option>
+            <option value="Deportes">Deportes</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Juventud">Juventud</option>
+            <option value="Salud">Salud</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <input id="website" class="form-control bg-black rounded-4" placeholder="Sitio Web" formControlName="website">
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <input id="starts_at" type="datetime-local" class="form-control bg-black rounded-4" formControlName="starts_at">
+          </div>
+          <div class="col">
+            <input id="finish_in" type="datetime-local" class="form-control bg-black rounded-4" formControlName="finish_in">
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group" role="group">
+            <!-- <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'image']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'calendar-alt']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'map-marker-alt']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'dollar-sign']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'users']"></fa-icon>
+            </button> -->
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">Postear</button>
+        </div>
+      </form>
+    </div>
   </div>
-  
+</div>
