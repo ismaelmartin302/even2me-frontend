@@ -2,7 +2,11 @@
   <div class="card bg-black p-4 shadow-sm">
     <div class="card-header bg-black d-flex justify-content-between align-items-center">
       <div class="d-flex align-items-center">
-        <img src="{{'http://127.0.0.1:8000/storage/' + user?.avatar}}" class="avatar-sm rounded-circle me-3" alt="User Avatar">
+        @if (user) {
+          <img [src]="'http://127.0.0.1:8000/storage/' + user.avatar" class="avatar-sm rounded-circle me-3" alt="User Avatar">
+        } @else {
+          <div class="avatar-sm rounded-circle me-3"> </div>
+        }
         <span class="fw-bold">Crear Evento</span>
       </div>
     </div>

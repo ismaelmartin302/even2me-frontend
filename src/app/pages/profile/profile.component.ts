@@ -7,6 +7,8 @@ import { IApiResponseFollower, IApiResponseFollowing, IApiResponseUser } from '.
 import { IApiResponseEvent } from '../../services/models/event-api.interface';
 import { EventComponent } from '../../records/event/event.component';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -24,15 +26,26 @@ export class ProfileComponent {
   followings: IApiResponseFollowing[] = [];
   showFollowersPopup: boolean = false;
   showFollowingsPopup: boolean = false;
+  private userSubscription: Subscription | undefined;
 
   constructor(
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private usersApiService: UsersApiService,
+    private userService: UserService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    if (this.router.url == '/profile') {
+      this.userSubscription = this.userService.user$.subscribe(user => {
+        this.user = user;
+        if (this.user) {
+          this.username = this.user.username
+        } else {
+          console.error('User is not loaded');      }
+      });
+    }
     this.route.paramMap.subscribe(params => {
       this.username = params.get('username') || '';
       this.loadUser();

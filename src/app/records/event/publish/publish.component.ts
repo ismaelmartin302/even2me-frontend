@@ -1,28 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersApiService } from '../../../services/users-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { IApiResponseEvent } from '../../../services/models/event-api.interface';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UserService } from '../../../services/user.service';
 import { IApiResponseUser } from '../../../services/models/user-api.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-publish',
   standalone: true,
   imports: [ReactiveFormsModule, FontAwesomeModule],
   templateUrl: './publish.component.html',
-  styleUrl: './publish.component.scss'
+  styleUrls: ['./publish.component.scss']
 })
-export class PublishComponent {
+export class PublishComponent implements OnInit, OnDestroy {
   user: IApiResponseUser | null = null;
-  user_id: number = 1;
   eventForm: FormGroup;
   customCapacitySelected = false;
+  private userSubscription: Subscription | undefined;
 
-  constructor (
+  constructor(
     private fb: FormBuilder,
     private usersApiService: UsersApiService,
-    private route: ActivatedRoute,
+    private userService: UserService,
     private router: Router
   ) {
       this.eventForm = this.fb.group({
@@ -36,25 +38,27 @@ export class PublishComponent {
         website: [''],
         starts_at: ['', Validators.required],
         finish_in: ['',],
-        user_id: [this.user_id, Validators.required]
+        user_id: ['', Validators.required] // Inicializar sin user_id
       });
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.loadUser();
+    this.userSubscription = this.userService.user$.subscribe(user => {
+      this.user = user;
+      if (this.user) {
+        console.log('User ID:', this.user.id);
+        this.eventForm.patchValue({ user_id: this.user.id });
+      } else {
+        console.error('User is not loaded');      }
     });
   }
-  loadUser(): void {
-    this.usersApiService.getUserByID(this.user_id).subscribe(
-      data => {
-        this.user = data;
-      },
-      error => {
-        console.error('Error fetching user', error);
-      }
-    );
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
+
   onSubmit() {
     if (this.eventForm.valid) {
       this.usersApiService.createEvent(this.eventForm.value).subscribe(
@@ -67,14 +71,15 @@ export class PublishComponent {
       );
     }
   }
+
   onCapacityChange(value: string): void {
     this.customCapacitySelected = value === 'personalizada';
     if (this.customCapacitySelected) {
-      this.eventForm.get('customCapacity')?.setValidators(Validators.required);
-      this.eventForm.get('customCapacity')?.updateValueAndValidity();
+      this.eventForm.get('capacity')?.setValidators(Validators.required);
+      this.eventForm.get('capacity')?.updateValueAndValidity();
     } else {
-      this.eventForm.get('customCapacity')?.clearValidators();
-      this.eventForm.get('customCapacity')?.updateValueAndValidity();
+      this.eventForm.get('capacity')?.clearValidators();
+      this.eventForm.get('capacity')?.updateValueAndValidity();
     }
   }
 }

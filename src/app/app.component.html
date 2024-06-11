@@ -20,7 +20,7 @@
                 <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill align-items-center m-3 gap-3">
                     <img [src]="user?.avatar ? 'http://127.0.0.1:8000/storage/' + user.avatar : 'http://127.0.0.1:8000/storage/default.png'"
                     class="avatar-md">
-                    <span class=" text-light fw-semibold">{{user?.username}}</span>
+                    <span class=" text-light fw-semibold">{{user?.nickname}}</span>
                 </div>
             } 
         </div>
