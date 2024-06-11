@@ -8,7 +8,7 @@ import { IApiResponseEvent } from '../../services/models/event-api.interface';
 import { EventComponent } from '../../records/event/event.component';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -51,6 +51,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.user = user;
                 this.username = user.username;
                 return forkJoin({
+                  user: of(user),
                   events: this.usersApiService.getUserEvents(this.username),
                   followers: this.usersApiService.getUserFollowers(this.username),
                   followings: this.usersApiService.getUserFollowings(this.username)
@@ -66,8 +67,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
       })
     ).subscribe(
       result => {
-        if (result) {
-          console.error("CARGA BIEN")
+        if (result && 'user' in result && 'events' in result && 'followers' in result && 'followings' in result) {
+          this.user = result.user;
+          this.events = result.events;
+          this.followers = result.followers;
+          this.followings = result.followings;
+        } else if (result && 'id' in result) {
+          this.user = result;
+          this.loadUserDetails();
         }
       },
       error => {
@@ -75,6 +82,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
     );
   }
+  
+  private loadUserDetails(): void {
+    forkJoin({
+      events: this.usersApiService.getUserEvents(this.username),
+      followers: this.usersApiService.getUserFollowers(this.username),
+      followings: this.usersApiService.getUserFollowings(this.username)
+    }).subscribe(
+      ({ events, followers, followings }) => {
+        this.events = events;
+        this.followers = followers;
+        this.followings = followings;
+      },
+      error => {
+        console.error('Error loading user details', error);
+      }
+    );
+  }
+  
   
     
  

@@ -14,7 +14,9 @@ import { UsersApiService } from '../../services/users-api.service';
 })
 export class EventComponent {
   imagen_visible: boolean = false;
-  userId: number = 2;
+  userId: number = 0;
+  @Input() isLoggedIn: boolean = false;
+  
   @Input({ required: true }) event?: IApiResponseEvent;
 
   constructor(private router: Router, private usersApiService: UsersApiService) {}
@@ -36,7 +38,7 @@ export class EventComponent {
   }
 
   toggleLike(): void {
-    if (this.event && this.event.likes) {
+    if (this.event && this.event.likes && this.isLoggedIn) {
         const wasLiked = this.isLiked();
 
         // Actualización optimista del UI

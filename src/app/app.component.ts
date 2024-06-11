@@ -8,6 +8,7 @@ import { IApiResponseUser } from './services/models/user-api.interface';
 import { UsersApiService } from './services/users-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { SharedService } from './services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent {
   isLoggedIn: boolean = false;
   user: any = null;
   loading: boolean = true;
-  constructor(library: FaIconLibrary, public router: Router, private cdr: ChangeDetectorRef, private authService: AuthService) {
+  constructor(library: FaIconLibrary, public router: Router, private cdr: ChangeDetectorRef, private authService: AuthService, private sharedService: SharedService) {
     library.addIcons(farHeart, farUser, farComment, farCalendarXmark, farCalendar, farBell);
     library.addIcons(faHeart, faUser, faLink, faRetweet, faCalendarXmark, faComment, faCalendar, faBell, faPlus, faHouse, faUserPlus, faUserMinus, faMagnifyingGlass, faLocationDot, faBars);
   }
@@ -38,6 +39,7 @@ export class AppComponent {
       console.log(this.currentUrl)
     });
     this.isLoggedIn = this.authService.isLoggedIn();
+    this.sharedService.setLoggedIn(this.isLoggedIn);
     if (this.isLoggedIn) {
       this.authService.getUser().subscribe(user => {
         this.user = user;

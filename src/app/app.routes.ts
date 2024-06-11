@@ -20,7 +20,7 @@ export const routes: Routes = [
     { path: 'options', component: OptionsComponent, canActivate: [authGuard] },
     { path: '404', component: Error404Component },
 
-    { path: 'user/:username', component: ProfileComponent, canActivate: [authGuard] },
+    { path: 'user/:username', component: ProfileComponent },
     { path: 'post', component: PublishComponent, canActivate: [authGuard] },
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },

@@ -10,6 +10,12 @@
     </a>
     }
   </li>
+  @if (!this.isLoggedIn && this.router.url != '/login' && this.router.url != '/register') {
+    <li class="d-block d-xl-none">
+      <a routerLink="/login" class="rounded-pill btn btn-primary d-flex">
+        Iniciar Sesion</a>
+    </li>
+  }
   <li>
     @if (this.router.url == '/search') {
     <a routerLink="/search" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Descubrir">
@@ -21,10 +27,14 @@
     </a>
     }
   </li>
-  <li class="d-block d-xl-none">
-    <button class="rounded-circle btn btn-primary d-flex gap-2 align-items-center" style="width: 3em; height: 3em;">
-      <fa-icon [icon]="['fas', 'plus']" class="fs-4"></fa-icon></button>
-  </li>
+  @if (this.isLoggedIn) {
+    <li class="d-block d-xl-none">
+      <a routerLink="/post" class="rounded-circle btn btn-primary d-flex gap-2 align-items-center" style="width: 3em; height: 3em;">
+        <fa-icon [icon]="['fas', 'plus']" class="fs-4 m-auto"></fa-icon></a>
+    </li>
+  }
+
+  @if (this.isLoggedIn) {
   <li>
     @if (this.router.url == '/profile') {
     <a routerLink="/profile" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Perfil">
@@ -36,15 +46,18 @@
     </a>
     }
   </li>
-  <li>
-    @if (this.router.url == '/options') {
-    <a routerLink="/options" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
-      <i class="bi bi-gear"></i>
-    </a>
-    } @else {
-    <a routerLink="/options" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
-      <i class="bi bi-gear"></i>
-    </a>
-    }
-  </li>
+  }
+  @if (this.isLoggedIn) {
+    <li>
+      @if (this.router.url == '/options') {
+      <a routerLink="/options" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
+        <i class="bi bi-gear"></i>
+      </a>
+      } @else {
+      <a routerLink="/options" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
+        <i class="bi bi-gear"></i>
+      </a>
+      }
+    </li>
+  }
 </ul>
