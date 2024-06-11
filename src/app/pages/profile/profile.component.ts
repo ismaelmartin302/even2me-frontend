@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -8,7 +8,8 @@ import { IApiResponseEvent } from '../../services/models/event-api.interface';
 import { EventComponent } from '../../records/event/event.component';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit, OnDestroy {
   user: IApiResponseUser | null = null;
   isExpanded: boolean = false;
   username: string = '';
@@ -37,36 +38,52 @@ export class ProfileComponent {
   ) { }
 
   ngOnInit(): void {
-    if (this.router.url == '/profile') {
-      this.userSubscription = this.userService.user$.subscribe(user => {
-        this.user = user;
-        if (this.user) {
-          this.username = this.user.username
+    this.userSubscription = this.route.paramMap.pipe(
+      switchMap(params => {
+        const usernameParam = params.get('username');
+        if (usernameParam) {
+          this.username = usernameParam;
+          return this.usersApiService.getUserByUsername(this.username);
+        } else if (this.router.url === '/profile') {
+          return this.userService.user$.pipe(
+            switchMap(user => {
+              if (user) {
+                this.user = user;
+                this.username = user.username;
+                return forkJoin({
+                  events: this.usersApiService.getUserEvents(this.username),
+                  followers: this.usersApiService.getUserFollowers(this.username),
+                  followings: this.usersApiService.getUserFollowings(this.username)
+                });
+              } else {
+                throw new Error('User is not loaded');
+              }
+            })
+          );
         } else {
-          console.error('User is not loaded');      }
-      });
-    }
-    this.route.paramMap.subscribe(params => {
-      this.username = params.get('username') || '';
-      this.loadUser();
-      this.loadUserEvents();
-      this.loadUserFollowers();
-      this.loadUserFollowings();
-      this.showFollowersPopup = false;
-      this.showFollowingsPopup = false;
-    });
-  }
-
-  loadUser(): void {
-    this.usersApiService.getUserByUsername(this.username).subscribe(
-      data => {
-        this.user = data;
+          throw new Error('Username is required');
+        }
+      })
+    ).subscribe(
+      result => {
+        if (result) {
+          console.error("CARGA BIEN")
+        }
       },
       error => {
-        console.error('Error fetching user', error);
+        console.error('Error loading user data', error);
       }
     );
   }
+  
+    
+ 
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
   getBiography(): SafeHtml {
     if (this.user) {
       if (this.isExpanded) {
@@ -77,6 +94,7 @@ export class ProfileComponent {
     }
     return '';
   }
+
   limitar_Caracteres(texto: string): string {
     if (texto.length >= 200) {
       return texto.substring(0, 200) + '... <span class="text-secondary clickable"> [Mostrar Más] </span>';
@@ -84,45 +102,11 @@ export class ProfileComponent {
       return texto;
     }
   }
+
   toggleExpand(): void {
     this.isExpanded = !this.isExpanded;
   }
-  loadUserEvents(): void {
-    this.usersApiService.getUserEvents(this.username).subscribe(
-      data => {
-        for (let valor = 0; valor < data.length; valor++) {
-          let element = data[valor];
-          console.log(element)
-        }
-        this.events = data;
-      },
-      error => {
-        console.error('Error fetching user events', error);
-      }
-    );
-  }
 
-  loadUserFollowers(): void {
-    this.usersApiService.getUserFollowers(this.username).subscribe(
-      data => {
-        this.followers = data;
-      },
-      error => {
-        console.error('Error fetching user followers', error);
-      }
-    );
-  }
-
-  loadUserFollowings(): void {
-    this.usersApiService.getUserFollowings(this.username).subscribe(
-      data => {
-        this.followings = data;
-      },
-      error => {
-        console.error('Error fetching user followings', error);
-      }
-    );
-  }
   toggleFollowersPopup(): void {
     this.showFollowersPopup = !this.showFollowersPopup;
   }
@@ -134,6 +118,7 @@ export class ProfileComponent {
   goToUserProfile(username: string): void {
     this.router.navigate(['/user', username]);
   }
+
   closePopupOutside(event: Event, popupType: 'followers' | 'followings'): void {
     const popupContent = (event.target as HTMLElement).closest('.popup-content');
     if (!popupContent) {
