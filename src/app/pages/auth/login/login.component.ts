@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -8,7 +8,7 @@ import { authGuard } from '../../../auth.guard';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule, HttpClientModule, RouterLink],
   providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -30,7 +30,7 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         (error) => {
-          this.error = 'Invalid login credentials';
+          this.error = 'El correo electrónico o la contraseña son incorrectos';
           console.error('Login error', error);
         }
       );
