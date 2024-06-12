@@ -25,7 +25,8 @@
                 <div class="dropdown">
                     <div class="d-flex bottom-0 btn rounded-pill align-items-center m-3 gap-3" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                       <img [src]="user?.avatar ? 'http://127.0.0.1:8000/storage/' + user.avatar : 'http://127.0.0.1:8000/storage/default.png'" class="avatar-md">
-                      <span class="text-light fw-semibold">{{user?.nickname}}</span>
+                      <span class="text-light fw-semibold d-none d-md-block">{{user?.nickname}}</span>
+                      <fa-icon [icon]="['fas', 'ellipsis-vertical']" class="m-auto text-secondary d-none d-md-block"></fa-icon>
                     </div>
                     <ul class="dropdown-menu mb-2 p-1 bg-black" aria-labelledby="dropdownMenuButton">
                       <li><a class="dropdown-item py-1" routerLink="/profile"> <fa-icon [icon]="['fas', 'user']" class="fs-4 m-auto"></fa-icon> Perfil</a></li>
