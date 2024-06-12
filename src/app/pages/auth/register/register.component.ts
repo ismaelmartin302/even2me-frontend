@@ -19,7 +19,7 @@ export class RegisterComponent {
 
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
     this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.maxLength(40)]],
+      username: ['', [Validators.required, Validators.maxLength(20)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       password_confirmation: ['', [Validators.required]]
@@ -35,7 +35,20 @@ export class RegisterComponent {
 
       this.authService.register(this.registerForm.value).subscribe(
         () => {
-          this.router.navigate(['/home']);
+          this.authService.login({
+            email: this.registerForm.value.email,
+            password: this.registerForm.value.password
+          }).subscribe(
+            () => {
+              this.router.navigate(['/home']).then(() => {
+                window.location.reload();
+              });
+            },
+            (loginError) => {
+              this.error = 'Registro exitoso, pero fallo en el inicio de sesión';
+              console.error('Login error', loginError);
+            }
+          );
         },
         (error) => {
           this.error = 'El nombre de usuario o el correo ya existen';

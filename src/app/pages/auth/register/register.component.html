@@ -17,7 +17,7 @@
         <label for="password_confirmation">Confirmar Contraseña:</label>
         <input type="password" id="password_confirmation" class="form-control bg-black rounded-4" placeholder="Confirma tu contraseña" formControlName="password_confirmation" required>
       </div>
-      <button type="submit"  class="btn btn-outline-primary rounded-pill p-1 px-4 d-flex m-auto" [disabled]="registerForm.invalid">Registerarse</button>
+      <button type="submit"  class="btn btn-outline-primary rounded-pill p-1 px-4 d-flex m-auto" [disabled]="registerForm.invalid">Registrarse</button>
     </form>
     @if (error) {
         <div class="error text-danger mb-3">{{error}}</div>
