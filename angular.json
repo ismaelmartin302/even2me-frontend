@@ -20,7 +20,7 @@
             "outputPath": "dist/frontend",
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/styles" 
+                "src/styles"
               ]
             },
             "index": "src/index.html",
@@ -41,10 +41,8 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "server": "src/main.server.ts",
             "prerender": true,
