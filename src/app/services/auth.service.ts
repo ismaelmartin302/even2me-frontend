@@ -1,16 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'http://127.0.0.1:8000/api';
+  private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.hasToken());
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {
+    const isLoggedIn = this.hasToken();
+    this.isLoggedInSubject = new BehaviorSubject<boolean>(isLoggedIn);
+    this.isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  }
 
+  private hasToken(): boolean {
+    if (typeof window !== 'undefined') {
+      return !!localStorage.getItem('token');
+    }
+    return false;
+  }
   register(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
@@ -20,12 +33,16 @@ export class AuthService {
       tap((response: any) => {
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', response.token);
+          this.isLoggedInSubject.next(true);
         }
       })
     );
   }
 
   getUser(): Observable<any> {
+    if (typeof window === 'undefined') {
+      return of(null);
+    }
     const token = localStorage.getItem('token');
     if (!token) {
       return of(null);
@@ -37,29 +54,13 @@ export class AuthService {
   logout(): void {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('token');
+      this.isLoggedInSubject.next(false);
+      this.router.navigate(['/login']);
     }
   }
 
-  isLoggedIn(): boolean {
-    if (typeof window === 'undefined') {
-      return false;
-    }
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return false;
-    }
-    // Optional: verify token with API
-    this.http.get(`${this.apiUrl}/user`, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).pipe(
-      map(() => true),
-      catchError(() => of(false))
-    ).subscribe(isValid => {
-      if (!isValid) {
-        this.logout();
-      }
-    });
 
-    return !!token;
+  isLoggedIn(): boolean {
+    return this.hasToken();
   }
 }

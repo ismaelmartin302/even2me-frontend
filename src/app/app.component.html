@@ -21,6 +21,9 @@
     </div>
     <div class="row bg-black fixed-bottom pe-5 ps-5"> 
         <div class="col flex-grow-1 d-none d-sm-block">
+            @if (isLoggedIn) {
+                <button (click)="logout()">Cerrar Sesión</button>
+            }
             @if (isLoggedIn && this.router.url != '/profile') {
                 <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill align-items-center m-3 gap-3">
                     <img [src]="user?.avatar ? 'http://127.0.0.1:8000/storage/' + user.avatar : 'http://127.0.0.1:8000/storage/default.png'"

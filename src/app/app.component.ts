@@ -29,26 +29,38 @@ export class AppComponent {
   currentUrl: string = this.router.url;
 
   private readonly _usersApiService = inject(UsersApiService)
-  
+
   users: IApiResponseUser[] = [];
+
   ngOnInit(): void {
-    this._usersApiService.getUsers().subscribe((users) => {
-      this.users = users
-      this.currentUrl = this.router.url
+    this._usersApiService.getUsers().subscribe(users => {
+      this.users = users;
+      this.currentUrl = this.router.url;
       this.cdr.detectChanges();
-      console.log(this.currentUrl)
+      console.log(this.currentUrl);
     });
-    this.isLoggedIn = this.authService.isLoggedIn();
-    this.sharedService.setLoggedIn(this.isLoggedIn);
-    if (this.isLoggedIn) {
-      this.authService.getUser().subscribe(user => {
-        this.user = user;
+
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+      this.sharedService.setLoggedIn(isLoggedIn);
+
+      if (isLoggedIn) {
+        this.authService.getUser().subscribe(user => {
+          this.user = user;
+          this.loading = false;
+          this.cdr.detectChanges();
+        }, () => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        });
+      } else {
+        this.user = null;
         this.loading = false;
-      }, () => {
-        this.loading = false;
-      });
-    } else {
-      this.loading = false;
-    }
+        this.cdr.detectChanges();
+      }
+    });
+  }
+  logout() {
+    this.authService.logout();
   }
 } 
