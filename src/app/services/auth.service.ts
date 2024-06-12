@@ -12,11 +12,7 @@ export class AuthService {
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
-    const isLoggedIn = this.hasToken();
-    this.isLoggedInSubject = new BehaviorSubject<boolean>(isLoggedIn);
-    this.isLoggedIn$ = this.isLoggedInSubject.asObservable();
-  }
+  constructor(private http: HttpClient, private router: Router) { }
 
   private hasToken(): boolean {
     if (typeof window !== 'undefined') {
@@ -34,6 +30,7 @@ export class AuthService {
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', response.token);
           this.isLoggedInSubject.next(true);
+          this.router.navigate(['/home']);
         }
       })
     );

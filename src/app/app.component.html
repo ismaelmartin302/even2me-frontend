@@ -12,7 +12,7 @@
         </div>
         <div class="col-sm d-none d-xl-block">
             <div class="d-flex position-fixed end-0 me-3 mt-3 gap-2">
-                @if (!this.isLoggedIn && this.router.url != '/login' && this.router.url != '/register') {
+                @if (!isLoggedIn && this.router.url != '/login' && this.router.url != '/register') {
                     <a routerLink="/login" class="btn btn-sm rounded-pill btn-outline-primary p-1 pe-3 ps-3 fs-6">Iniciar Sesion</a>
                     <a routerLink="/register" class="btn btn-sm rounded-pill btn-primary p-1 pe-3 ps-3 fs-6">Crear Cuenta</a>
                 }

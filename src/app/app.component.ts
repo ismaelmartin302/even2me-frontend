@@ -62,5 +62,6 @@ export class AppComponent {
   }
   logout() {
     this.authService.logout();
+    this.cdr.detectChanges();
   }
 } 
