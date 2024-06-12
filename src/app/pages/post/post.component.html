@@ -1,0 +1,70 @@
+@if (event) {
+    <div class="container">
+        <header class="row mb-3 mt-3">
+            @if (event.picture) {
+                <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
+                }
+            <img src="{{'http://127.0.0.1:8000/storage/' + 'defaultbanner.png'}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
+        </header>
+        <main class="row d-flex gap-2">
+            <aside class="col-1 flex-grow-1">
+                <ul class="list-unstyled bg-dark rounded-5 py-3 px-4 ">
+                    <a href="https://www.google.es/maps/search/{{event.location}}" class="text-decoration-none text-info">
+                        <li class="text-break"> <fa-icon [icon]="['fas', 'location-dot']"></fa-icon> {{event.location}}</li>
+                    </a>
+                    @if (isNaN(event.price)) {
+                        <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success"> Gratuito </span></li>
+                    } @else {
+                        <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success"> {{event.price}} € </span></li>
+                    }
+                    @if (isNaN(event.capacity)) {
+                        <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span class="text-success"> Sin aforo</span> </li>
+                    } @else if (event.current_attendees >= event.capacity) {
+                        <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span class="text-danger"> Lleno</span> </li>
+                    } @else {
+                        <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> {{event.current_attendees}} / {{event.capacity}} </li>
+                    }
+                    <li class="text-break"> <fa-icon [icon]="['fas', 'link']"></fa-icon> <a class="link-primary ms-1" href="{{event.website}}">Sitio Web</a> </li>
+                </ul>
+                <nav>
+                        <ul class="d-flex justify-content-around ms-0 ps-0 list-unstyled">
+                            <li class="likes" (click)="toggleLike()" [ngClass]="{'text-primary': isLiked()}">
+                                <fa-icon [icon]="isLiked() ? ['fas', 'heart'] : ['far', 'heart']" ></fa-icon>
+                                {{event.likes_count}}
+                            </li>                        
+                            <li class="comments">
+                                <fa-icon [icon]="['far', 'comment']"></fa-icon>
+                                {{event.comments_count}}
+                            </li>
+                            <li class="share">
+                                <i class="bi bi-share"></i>
+                            </li>
+                        </ul>
+                </nav>
+            </aside>
+            <section class="col-6 flex-grow-1 d-flex flex-column gap-2">
+                <header class="d-flex flex-column gap-3">
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-1">{{event.name}}</span>
+                        <span> <fa-icon [icon]="['far', 'calendar']"></fa-icon> 
+                            {{event.starts_at | date:"d MMMM h:mm a" }}
+                            -
+                            {{event.finish_in | date:"d MMMM h:mm a" }}
+                        </span>
+                    </div>
+                    <nav class="d-flex align-items-center gap-2">
+                        <img src="{{'http://127.0.0.1:8000/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
+                        <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
+                    </nav>
+                </header>
+                <main>
+                    {{event.description}}
+                </main>
+            </section>
+        </main>
+        <footer>
+            <!-- comments -->
+        </footer>
+    </div>
+}
+  

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBell as farBell, faComment as farComment, faCalendar as farCalendar, faHeart as farHeart, faUser as farUser, faCalendarXmark as farCalendarXmark } from '@fortawesome/free-regular-svg-icons';
-import { faArrowRightFromBracket, faBars, faBell, faCalendar, faCalendarXmark, faComment, faEllipsisVertical, faHeart, faHouse, faLink, faLocationDot, faMagnifyingGlass, faPlus, faRetweet, faUser, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faBell, faCalendar, faCalendarXmark, faCoins, faComment, faEllipsisVertical, faHeart, faHouse, faLink, faLocationDot, faMagnifyingGlass, faPlus, faRetweet, faUser, faUserGroup, faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { MenuComponent } from './layout/menu/menu.component';
 import { IApiResponseUser } from './services/models/user-api.interface';
 import { UsersApiService } from './services/users-api.service';
@@ -24,7 +24,7 @@ export class AppComponent {
   loading: boolean = true;
   constructor(library: FaIconLibrary, public router: Router, private cdr: ChangeDetectorRef, private authService: AuthService, private sharedService: SharedService) {
     library.addIcons(farHeart, farUser, farComment, farCalendarXmark, farCalendar, farBell);
-    library.addIcons(faHeart, faUser, faLink, faRetweet, faCalendarXmark, faComment, faCalendar, faBell, faPlus, faHouse, faUserPlus, faUserMinus, faMagnifyingGlass, faArrowRightFromBracket, faEllipsisVertical, faLocationDot, faBars);
+    library.addIcons(faHeart, faUser, faLink, faRetweet, faCalendarXmark, faComment, faCalendar, faBell, faPlus, faHouse, faUserPlus, faCoins, faUserGroup, faUserMinus, faMagnifyingGlass, faArrowRightFromBracket, faEllipsisVertical, faLocationDot, faBars);
   }
   currentUrl: string = this.router.url;
 

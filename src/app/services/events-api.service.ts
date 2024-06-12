@@ -12,4 +12,7 @@ export class EventsApiService {
   getEvents() {
     return this.httpClient.get<IApiResponseEvent[]>(this.url + 'events')
   }
+  getEventById(id: number): Observable<IApiResponseEvent> {
+    return this.httpClient.get<IApiResponseEvent>(`${this.url}events/${id}`);
+  }
 }

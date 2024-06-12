@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { PublishComponent } from './records/event/publish/publish.component';
 import { authGuard } from './auth.guard';
 import { GuestGuard } from './guest.guard';
+import { PostComponent } from './pages/post/post.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: '404', component: Error404Component },
 
     { path: 'user/:username', component: ProfileComponent },
+    { path: 'event/:id', component: PostComponent },
     { path: 'post', component: PublishComponent, canActivate: [authGuard] },
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
