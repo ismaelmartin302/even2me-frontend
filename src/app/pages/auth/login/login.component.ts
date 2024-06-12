@@ -36,7 +36,9 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         () => {
-          window.location.reload(); // Joder macho que cutre ya te vale
+          this.router.navigate(['/home']).then(() => {
+            window.location.reload();
+          });
         },
         (error) => {
           this.error = 'El correo electrónico o la contraseña son incorrectos';

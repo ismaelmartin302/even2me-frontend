@@ -9,10 +9,11 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { PublishComponent } from './records/event/publish/publish.component';
 import { authGuard } from './auth.guard';
+import { GuestGuard } from './guest.guard';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
+    { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
+    { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
     { path: 'home', component: HomeComponent },
     { path: 'search', component: ExploreComponent },
     { path: 'notifications', component: NotificationsComponent },
