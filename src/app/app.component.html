@@ -21,15 +21,17 @@
     </div>
     <div class="row bg-black fixed-bottom pe-5 ps-5"> 
         <div class="col flex-grow-1 d-none d-sm-block">
-            @if (isLoggedIn) {
-                <button (click)="logout()">Cerrar Sesión</button>
-            }
             @if (isLoggedIn && this.router.url != '/profile') {
-                <div routerLink="/profile" class="d-flex bottom-0 btn rounded-pill align-items-center m-3 gap-3">
-                    <img [src]="user?.avatar ? 'http://127.0.0.1:8000/storage/' + user.avatar : 'http://127.0.0.1:8000/storage/default.png'"
-                    class="avatar-md">
-                    <span class=" text-light fw-semibold">{{user?.nickname}}</span>
-                </div>
+                <div class="dropdown">
+                    <div class="d-flex bottom-0 btn rounded-pill align-items-center m-3 gap-3" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img [src]="user?.avatar ? 'http://127.0.0.1:8000/storage/' + user.avatar : 'http://127.0.0.1:8000/storage/default.png'" class="avatar-md">
+                      <span class="text-light fw-semibold">{{user?.nickname}}</span>
+                    </div>
+                    <ul class="dropdown-menu mb-2 p-1 bg-black" aria-labelledby="dropdownMenuButton">
+                      <li><a class="dropdown-item py-1" routerLink="/profile"> <fa-icon [icon]="['fas', 'user']" class="fs-4 m-auto"></fa-icon> Perfil</a></li>
+                      <li><a class="dropdown-item py-1 clickable" (click)="logout()"> <fa-icon [icon]="['fas', 'arrow-right-from-bracket']" class="fs-4 m-auto"></fa-icon> Cerrar Sesión</a></li>
+                    </ul>
+                  </div>                  
             } 
         </div>
         <div class="col-4 flex-grow-1 border-top pt-3 pb-2 pb-lg-3 pt-lg-4">
