@@ -17,7 +17,14 @@ export interface IApiResponseEvent {
     comments_count: number;
     reposts_count: number;
     likes_count: number;
-    comments: Array<object>;
-    user: { id: number; username: string; avatar: string; nickname: string};
+    comments: Array<{
+        id: number;
+        user: {
+            nickname: string;
+            avatar: string;
+        };
+        content: string;
+    }>;
+    user: { id: number; username: string; avatar: string; nickname: string };
     likes: Array<{ id: number; username: string }>; // Asegúrate de que los "likes" sean objetos
 }

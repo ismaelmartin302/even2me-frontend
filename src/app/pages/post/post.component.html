@@ -62,8 +62,20 @@
                 </main>
             </section>
         </main>
+        <hr>
         <footer>
-            <!-- comments -->
+            <h4>Commentarios</h4>
+            @for (comment of event.comments; track comment) {
+                <div class="d-flex gap-3 mt-3 mb-3">
+                    <img [src]="'http://127.0.0.1:8000/storage/' + comment.user.avatar" class="avatar-sm" alt="">
+                    <div class="flex-grow-1">
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold">{{ comment.user.nickname }}</span>
+                      </div>
+                      <p>{{ comment.content }}</p>
+                    </div>
+                  </div>
+            }
         </footer>
     </div>
 }
