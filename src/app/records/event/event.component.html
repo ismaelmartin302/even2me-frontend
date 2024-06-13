@@ -3,24 +3,34 @@
     <div class="d-flex gap-3 mt-2 mb-2">
         <img src="{{'http://127.0.0.1:8000/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
         <main class="flex-grow-1 d-flex flex-column gap-3">
-            <header class="d-flex flex-column gap-2">
-                <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
-                <nav class="d-flex flex-column gap-2">
-                    <span class="fw-bold text-primary">{{event.name}}</span>
-                    <ul class="nav justify-content-lg-around justify-content-center gap-1 border rounded-pill p-2 pt-2 pt-lg-3 bg-dark border-secondary">
-                        <li>
-                            <fa-icon [icon]="['fas', 'location-dot']"></fa-icon>
-                            {{ event.location }}
-                        </li>
-                        <hr>
-                        <li>
-                            <fa-icon [icon]="['fas', 'calendar']"></fa-icon>
-                                {{event.starts_at | date:"d MMMM h:mm a" }}
-                                -
-                                {{event.finish_in | date:"d MMMM h:mm a" }}
-                        </li>
-                    </ul>
-                </nav>
+            <header class="d-flex justify-content-between">
+                <div class="d-flex flex-column gap-2">
+                    <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
+                <span class="fw-bold text-primary">{{event.name}}</span>
+                </div>
+                <div class="dropend">
+                    <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <fa-icon [icon]="['fas', 'bars']" class="text-secondary"></fa-icon>
+                    </button>
+                    <ul class="dropdown-menu list-unstyled bg-dark rounded-5 py-3 px-4" style="width:max-content;" aria-labelledby="dropdownMenuButton1">
+                            <a href="https://www.google.es/maps/search/{{event.location}}" class="text-decoration-none text-info">
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'location-dot']"></fa-icon> {{event.location}}</li>
+                            </a>
+                            @if (isNaN(event.price)) {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success"> Gratuito </span></li>
+                            } @else {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success"> {{event.price}} € </span></li>
+                            }
+                            @if (isNaN(event.capacity)) {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span class="text-success"> Sin aforo</span> </li>
+                            } @else if (event.current_attendees >= event.capacity) {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span class="text-danger"> Lleno</span> </li>
+                            } @else {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> {{event.current_attendees}} / {{event.capacity}} </li>
+                            }
+                            <li class="text-break"> <fa-icon [icon]="['fas', 'link']"></fa-icon> <a class="link-primary ms-1" href="{{event.website}}">Sitio Web</a> </li>
+                      </ul>
+                </div>
             </header>
             <main class="d-flex flex-column gap-2">
                 {{event.description}}
