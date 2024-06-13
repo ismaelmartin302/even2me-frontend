@@ -29,6 +29,11 @@
                                 <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> {{event.current_attendees}} / {{event.capacity}} </li>
                             }
                             <li class="text-break"> <fa-icon [icon]="['fas', 'link']"></fa-icon> <a class="link-primary ms-1" href="{{event.website}}">Sitio Web</a> </li>
+                            
+
+                            @if (canDeleteEvent()) {
+                                <button class="btn btn-danger" (click)="openDeleteModal()">Eliminar Evento</button>
+                            }
                       </ul>
                 </div>
             </header>
@@ -53,10 +58,6 @@
                             <fa-icon [icon]="['far', 'comment']"></fa-icon>
                             {{event.comments_count}}
                         </li>
-                        <!-- <li class="retweet">
-                            <fa-icon [icon]="['fas', 'retweet']"></fa-icon>
-                            {{event.reposts_count}}
-                        </li> -->
                         <li class="share">
                             <i class="bi bi-share"></i>
                         </li>
@@ -65,4 +66,20 @@
             </footer>
         </main>
     </div>
+
+    @if (showDeleteModal) {
+        <div class="d-flex position-fixed w-100 h-100 justify-content-center align-items-center top-0 bottom-0 start-0 end-0 m-auto z-2 bg-opacity-10 bg-black">
+
+            <div class="bg-dark p-5 rounded-5">
+                <h2>Confirmar eliminación</h2>
+                <p>¿Estás seguro de que deseas eliminar este evento?</p>
+                <div class="d-flex justify-content-around">
+                    <button (click)="deleteEvent()" class="btn d-none d-sm-block btn-danger">Eliminar</button>
+                    <button (click)="closeDeleteModal()" class="btn d-none d-sm-block btn-secondary">Cancelar</button>
+                    <button (click)="deleteEvent()" class="btn d-block d-sm-none btn-danger"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
+                    <button (click)="closeDeleteModal()" class="btn d-block d-sm-none btn-secondary"><fa-icon [icon]="['fas', 'xmark']"></fa-icon></button>
+                </div>
+            </div>
+        </div>
+    }
 }

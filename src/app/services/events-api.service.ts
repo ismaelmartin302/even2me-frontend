@@ -15,4 +15,7 @@ export class EventsApiService {
   getEventById(id: number): Observable<IApiResponseEvent> {
     return this.httpClient.get<IApiResponseEvent>(`${this.url}events/${id}`);
   }
+  deleteEvent(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.url}events/${id}`);
+  }
 }

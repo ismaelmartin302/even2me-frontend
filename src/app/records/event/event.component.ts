@@ -4,6 +4,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DatePipe, NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { UsersApiService } from '../../services/users-api.service';
+import { AuthService } from '../../services/auth.service';
+import { EventsApiService } from '../../services/events-api.service';
 
 @Component({
   selector: 'app-event',
@@ -15,12 +17,18 @@ import { UsersApiService } from '../../services/users-api.service';
 export class EventComponent {
   imagen_visible: boolean = false;
   userId: number = 0;
+  showDeleteModal: boolean = false;
   @Input() isLoggedIn: boolean = false;
 
   @Input({ required: true }) event?: IApiResponseEvent;
 
-  constructor(private router: Router, private usersApiService: UsersApiService) { }
+  constructor(private router: Router, private usersApiService: UsersApiService, private authService: AuthService, private eventApiService: EventsApiService) { }
 
+  ngOnInit(): void {
+    this.authService.getUser().subscribe(user => {
+      this.userId = user ? user.id : null;
+    });
+  }
   ocultar_imagen() {
     this.imagen_visible = false;
   }
@@ -74,6 +82,32 @@ export class EventComponent {
           }
         }
       });
+    }
+  }
+  canDeleteEvent(): boolean {
+    return this.authService.isLoggedIn() && this.event?.user_id === this.userId;
+  }
+  openDeleteModal(): void {
+    this.showDeleteModal = true;
+  }
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+  }
+
+  deleteEvent(): void {
+    if (this.event) {
+      console.log(this.event.id)
+      this.eventApiService.deleteEvent(this.event.id).subscribe({
+        next: () => {
+          alert('Evento eliminado con éxito.');
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('Error eliminando el evento:', err);
+          alert('Hubo un error al eliminar el evento.');
+        }
+      });
+      this.closeDeleteModal();  // Cerrar el modal después de la eliminación
     }
   }
 }
