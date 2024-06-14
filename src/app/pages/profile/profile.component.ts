@@ -8,8 +8,8 @@ import { IApiResponseEvent } from '../../services/models/event-api.interface';
 import { EventComponent } from '../../records/event/event.component';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-import { forkJoin, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { forkJoin, of, Subscription, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { EventsApiService } from '../../services/events-api.service';
 import { SharedService } from '../../services/shared.service';
 
@@ -58,7 +58,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
         const usernameParam = params.get('username');
         if (usernameParam) {
           this.username = usernameParam;
-          return this.usersApiService.getUserByUsername(this.username);
+          return this.usersApiService.getUserByUsername(this.username).pipe(
+            catchError(error => {
+              if (error.status === 404) {
+                this.router.navigate(['/404']);
+              }
+              return throwError(error);
+            })
+          );
         } else if (this.router.url === '/profile') {
           return this.userService.user$.pipe(
             switchMap(user => {

@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subscription, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { IApiResponseEvent } from '../../services/models/event-api.interface';
 import { EventsApiService } from '../../services/events-api.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -55,7 +55,14 @@ export class PostComponent implements OnInit, OnDestroy {
       switchMap(params => {
         const id = params.get('id');
         if (id) {
-          return this.eventsApiService.getEventById(+id);
+          return this.eventsApiService.getEventById(+id).pipe(
+            catchError(error => {
+              if (error.status === 404) {
+                this.router.navigate(['/404']);
+              }
+              return throwError(error);
+            })
+          );
         } else {
           throw new Error('Event ID is required');
         }
