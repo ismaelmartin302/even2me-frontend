@@ -7,7 +7,18 @@
         </div>
     </nav>
     <div class="d-flex flex-column gap-2">
-        <span class="h5 fw-bold ms-2 mt-2 text-primary">{{user?.nickname}}</span>
+        <div class="d-flex justify-content-between">
+            <span class="h5 fw-bold ms-2 mt-2 text-primary">{{user?.nickname}}</span>
+            @if (isLoggedIn && user?.id !== currentUserId) {
+                <div>
+                    @if (!isFollowing()) {
+                        <button (click)="followUser()" class="btn btn-primary">Seguir</button>
+                    } @else if (isFollowing()) {
+                        <button (click)="unfollowUser()" class="btn btn-outline-primary">Dejar de Seguir</button>
+                    }
+                </div>
+            }
+        </div>
         <div>
             <div>
                 <span [innerHTML]="getBiography()" (click)="toggleExpand()" class="cursor-pointer"></span>

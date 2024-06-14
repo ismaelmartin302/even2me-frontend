@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   showFollowingsPopup: boolean = false;
   private userSubscription: Subscription | undefined;
   isLoggedIn: boolean = false;
+  currentUserId: number | null = null;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -40,11 +41,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private router: Router,
     private sharedService: SharedService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     this.sharedService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
+    });
+    this.authService.getUser().subscribe(user => {
+      if (user) {
+        this.currentUserId = user.id;
+      }
     });
     this.userSubscription = this.route.paramMap.pipe(
       switchMap(params => {
@@ -163,6 +170,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
       } else {
         this.showFollowingsPopup = false;
       }
+    }
+  }
+  isFollowing(): boolean {
+    return this.followers.some(follower => follower.follower_id === this.currentUserId);
+  }
+
+  followUser(): void {
+    if (this.user && this.currentUserId !== null) {
+      this.usersApiService.followUser(this.currentUserId, this.user.id).subscribe((follower: IApiResponseFollower) => {
+        this.followers.push(follower);
+      });
+    }
+  }
+
+  unfollowUser(): void {
+    if (this.user && this.currentUserId !== null) {
+      this.usersApiService.unfollowUser(this.currentUserId, this.user.id).subscribe(() => {
+        this.followers = this.followers.filter(follower => follower.follower_id !== this.currentUserId);
+      });
     }
   }
 }
