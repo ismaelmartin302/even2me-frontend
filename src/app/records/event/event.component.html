@@ -5,7 +5,7 @@
         <main class="flex-grow-1 d-flex flex-column gap-3 clickable" (click)="goToEvent(event.id)">
             <header class="d-flex justify-content-between">
                 <div class="d-flex flex-column gap-2">
-                    <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
+                    <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username); $event.stopPropagation()">{{event.user.nickname}}</span>
                 <span class="fw-bold text-primary">{{event.name}}</span>
                 </div>
                 <div class="dropend" (click)="$event.stopPropagation()">
