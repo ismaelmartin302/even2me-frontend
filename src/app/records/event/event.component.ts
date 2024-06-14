@@ -41,6 +41,12 @@ export class EventComponent {
     this.router.navigate(['/user', username]);
   }
 
+  goToEvent(eventId: number): void {
+    this.router.navigate(['/event', eventId]);
+  }
+  scrollToComments(eventId: number): void {
+    this.router.navigate(['/event', eventId], { fragment: 'comments-section' });
+  }
   isLiked(): boolean {
     return !!(this.event?.likes?.some((like: { id: number }) => like.id === this.userId));
   }
@@ -100,7 +106,7 @@ export class EventComponent {
       this.eventApiService.deleteEvent(this.event.id).subscribe({
         next: () => {
           alert('Evento eliminado con éxito.');
-          this.router.navigate(['/home']);
+          window.location.reload();
         },
         error: (err) => {
           console.error('Error eliminando el evento:', err);

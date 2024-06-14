@@ -20,6 +20,7 @@ export interface IApiResponseEvent {
     comments: Array<{
         id: number;
         user: {
+            username: string;
             nickname: string;
             avatar: string;
         };

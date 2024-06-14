@@ -31,7 +31,7 @@
                                 <fa-icon [icon]="isLiked() ? ['fas', 'heart'] : ['far', 'heart']" ></fa-icon>
                                 {{event.likes_count}}
                             </li>                        
-                            <li class="comments">
+                            <li class="comments" (click)="scrollToComments()">
                                 <fa-icon [icon]="['far', 'comment']"></fa-icon>
                                 {{event.comments_count}}
                             </li>
@@ -63,13 +63,23 @@
         </main>
         <hr>
         <footer>
-            <h4>Commentarios</h4>
+            <h4 id="comments-section"#commentsSection>Commentarios</h4>
+            <div class="d-flex gap-3 mt-3 mb-3">
+                <img [src]="'http://127.0.0.1:8000/storage/' + loggedInUser.avatar" class="avatar-sm" alt="">
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold">{{ loggedInUser.nickname }}</span>
+                    </div>
+                    <textarea class="form-control mb-2" placeholder="Escribe un comentario..." [(ngModel)]="newComment"></textarea>
+                    <button class="btn btn-primary" (click)="postComment()">Publicar</button>
+                </div>
+            </div>
             @for (comment of event.comments; track comment) {
                 <div class="d-flex gap-3 mt-3 mb-3">
-                    <img [src]="'http://127.0.0.1:8000/storage/' + comment.user.avatar" class="avatar-sm" alt="">
+                    <img [src]="'http://127.0.0.1:8000/storage/' + comment.user.avatar" (click)="goToUserProfile(comment.user.username)" class="avatar-sm" alt="">
                     <div class="flex-grow-1">
                       <div class="d-flex align-items-center gap-2">
-                        <span class="fw-bold">{{ comment.user.nickname }}</span>
+                        <span class="fw-bold" (click)="goToUserProfile(comment.user.username)">{{ comment.user.nickname }}</span>
                       </div>
                       <p>{{ comment.content }}</p>
                     </div>

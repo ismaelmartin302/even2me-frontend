@@ -2,7 +2,7 @@
     <hr>
     <div class="d-flex gap-3 mt-2 mb-2">
         <img src="{{'http://127.0.0.1:8000/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
-        <main class="flex-grow-1 d-flex flex-column gap-3">
+        <main class="flex-grow-1 d-flex flex-column gap-3 clickable" (click)="goToEvent(event.id)">
             <header class="d-flex justify-content-between">
                 <div class="d-flex flex-column gap-2">
                     <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
@@ -50,11 +50,11 @@
             <footer>
                 <nav>
                     <ul class="nav justify-content-around">
-                        <li class="likes" (click)="toggleLike()" [ngClass]="{'text-primary': isLiked()}">
+                        <li class="likes" (click)="toggleLike(); $event.stopPropagation()" [ngClass]="{'text-primary': isLiked()}">
                             <fa-icon [icon]="isLiked() ? ['fas', 'heart'] : ['far', 'heart']" ></fa-icon>
                             {{event.likes_count}}
                         </li>                        
-                        <li class="comments">
+                        <li class="comments" (click)="scrollToComments(event.id); $event.stopPropagation()">
                             <fa-icon [icon]="['far', 'comment']"></fa-icon>
                             {{event.comments_count}}
                         </li>
