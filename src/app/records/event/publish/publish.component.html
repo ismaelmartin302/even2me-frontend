@@ -65,12 +65,12 @@
           <input id="website" class="form-control bg-black rounded-4" placeholder="Sitio Web" formControlName="website">
         </div>
         <div class="mb-3 row">
-          <div class="col">
+          <div class="col mb-3">
             <label for="starts_at">Fecha de inicio</label>
             <input id="starts_at" type="datetime-local" class="form-control bg-black rounded-4" formControlName="starts_at" value="3" (change)="onStartDateChange()">
           </div>
           @if (eventForm.get('starts_at')?.value) {
-            <div class="col">
+            <div class="col mb-3">
               <label for="finish_in">Fecha de finalización</label>
               <input id="finish_in" type="datetime-local" class="form-control bg-black rounded-4" formControlName="finish_in">
             </div>
@@ -78,9 +78,7 @@
         </div>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" role="group">
-            <!-- <button type="button" class="btn btn-link p-2">
-              <fa-icon [icon]="['far', 'image']"></fa-icon>
-            </button>
+            <!--
             <button type="button" class="btn btn-link p-2">
               <fa-icon [icon]="['far', 'calendar-alt']"></fa-icon>
             </button>

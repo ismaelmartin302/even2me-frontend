@@ -104,7 +104,7 @@ export class PublishComponent implements OnInit, OnDestroy {
 
     if (startDateControl && finishDateControl) {
       const startDate = new Date(startDateControl.value);
-      finishDateControl.setValidators([Validators.required, this.dateValidator, this.finishDateAfterStartDateValidator.bind(this)]);
+      finishDateControl.setValidators([this.dateValidator, this.finishDateAfterStartDateValidator.bind(this)]);
       finishDateControl.updateValueAndValidity();
     }
   }
@@ -117,9 +117,12 @@ export class PublishComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  finishDateAfterStartDateValidator(group: FormGroup): { [key: string]: boolean } | null {
-    const startDate = group.get('starts_at')?.value;
-    const finishDate = group.get('finish_in')?.value;
+  finishDateAfterStartDateValidator(group: AbstractControl): { [key: string]: boolean } | null {
+    const startDate = group.root.get('starts_at')?.value;
+    const finishDate = group.value;
+    if (!finishDate || finishDate == '') {
+      return null; // No error if finish date is not provided
+    }
     if (startDate && finishDate && new Date(finishDate) < new Date(startDate)) {
       return { 'finishDateBeforeStartDate': true };
     }
