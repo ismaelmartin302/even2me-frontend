@@ -47,6 +47,8 @@ export class PostComponent implements OnInit, OnDestroy {
     this.authService.getUser().subscribe(user => {
       this.userId = user ? user.id : null;
       this.loggedInUser = user ? { avatar: user.avatar, nickname: user.nickname } : { avatar: '', nickname: '' };
+      this.isLoggedIn = !!user;
+      console.log(this.isLoggedIn)
     });
 
     this.eventSubscription = this.route.paramMap.pipe(
