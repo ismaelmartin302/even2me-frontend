@@ -14,12 +14,21 @@
       <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <input id="name" class="form-control bg-black rounded-4" placeholder="Nombre del Evento" formControlName="name">
+          @if (eventForm.get('name')?.invalid && eventForm.get('name')?.touched) {
+            <div class="text-danger">El nombre es requerido</div>
+          }
         </div>
         <div class="mb-3">
           <textarea class="form-control bg-black rounded-4" placeholder="Descripción" formControlName="description" rows="3"></textarea>
+          @if (eventForm.get('description')?.invalid && eventForm.get('description')?.touched) {
+            <div class="text-danger">La descripción es requerida</div>
+          }
         </div>
         <div class="mb-3">
           <input id="location" class="form-control bg-black rounded-4" placeholder="Ubicación" formControlName="location">
+          @if (eventForm.get('location')?.invalid && eventForm.get('location')?.touched) {
+            <div class="text-danger">La ubicación es requerida</div>
+          }
         </div>
         <label for="price">Precio</label>
         <div class="d-flex gap-3 mb-3" role="group">
@@ -68,11 +77,22 @@
           <div class="col mb-3">
             <label for="starts_at">Fecha de inicio</label>
             <input id="starts_at" type="datetime-local" class="form-control bg-black rounded-4" formControlName="starts_at" value="3" (change)="onStartDateChange()">
+            @if (eventForm.get('starts_at')?.invalid && eventForm.get('starts_at')?.touched) {
+              <div class="text-danger">
+                @if (eventForm.get('starts_at')?.errors?.['required']) {La fecha de inicio es requerida}
+                @if (eventForm.get('starts_at')?.errors?.['invalidDate']) {La fecha tiene que ser futura}
+              </div>
+            }
           </div>
           @if (eventForm.get('starts_at')?.value) {
             <div class="col mb-3">
               <label for="finish_in">Fecha de finalización</label>
               <input id="finish_in" type="datetime-local" class="form-control bg-black rounded-4" formControlName="finish_in">
+              @if (eventForm.get('finish_in')?.invalid && eventForm.get('finish_in')?.touched) {
+                <div class="text-danger">
+                  @if (eventForm.get('finish_in')?.errors?.['finishDateBeforeStartDate']) {La fecha de finalización debe ser posterior a la fecha de inicio}
+                </div>
+              }
             </div>
           }
         </div>
