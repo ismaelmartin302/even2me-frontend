@@ -10,13 +10,16 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { forkJoin, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { EventsApiService } from '../../services/events-api.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [FontAwesomeModule, EventComponent],
+  providers: [EventsApiService],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   user: IApiResponseUser | null = null;
@@ -28,16 +31,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
   showFollowersPopup: boolean = false;
   showFollowingsPopup: boolean = false;
   private userSubscription: Subscription | undefined;
+  isLoggedIn: boolean = false;
 
   constructor(
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private usersApiService: UsersApiService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
+    this.sharedService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
     this.userSubscription = this.route.paramMap.pipe(
       switchMap(params => {
         const usernameParam = params.get('username');
@@ -57,24 +65,28 @@ export class ProfileComponent implements OnInit, OnDestroy {
                   followings: this.usersApiService.getUserFollowings(this.username)
                 });
               } else {
-                throw new Error('User is not loaded');
+                return of(null);
               }
             })
           );
         } else {
-          throw new Error('Username is required');
+          return of(null);
         }
       })
     ).subscribe(
       result => {
-        if (result && 'user' in result && 'events' in result && 'followers' in result && 'followings' in result) {
-          this.user = result.user;
-          this.events = result.events;
-          this.followers = result.followers;
-          this.followings = result.followings;
-        } else if (result && 'id' in result) {
-          this.user = result;
-          this.loadUserDetails();
+        if (result) {
+          if ('user' in result && 'events' in result && 'followers' in result && 'followings' in result) {
+            this.user = result.user;
+            this.events = result.events;
+            this.followers = result.followers;
+            this.followings = result.followings;
+          } else if ('id' in result) {
+            this.user = result;
+            this.loadUserDetails();
+          }
+        } else {
+          console.error('User is not loaded');
         }
       },
       error => {
@@ -82,27 +94,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
     );
   }
-  
+
   private loadUserDetails(): void {
-    forkJoin({
-      events: this.usersApiService.getUserEvents(this.username),
-      followers: this.usersApiService.getUserFollowers(this.username),
-      followings: this.usersApiService.getUserFollowings(this.username)
-    }).subscribe(
-      ({ events, followers, followings }) => {
-        this.events = events;
-        this.followers = followers;
-        this.followings = followings;
-      },
-      error => {
-        console.error('Error loading user details', error);
-      }
-    );
+    if (this.user) {
+      forkJoin({
+        events: this.usersApiService.getUserEvents(this.username),
+        followers: this.usersApiService.getUserFollowers(this.username),
+        followings: this.usersApiService.getUserFollowings(this.username)
+      }).subscribe(
+        ({ events, followers, followings }) => {
+          this.events = events;
+          this.followers = followers;
+          this.followings = followings;
+        },
+        error => {
+          console.error('Error loading user details', error);
+        }
+      );
+    }
   }
-  
-  
-    
- 
+
   ngOnDestroy(): void {
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();

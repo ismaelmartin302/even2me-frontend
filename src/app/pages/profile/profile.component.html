@@ -31,7 +31,7 @@
     <section>
         <ul class="list-unstyled">
             @for (event of events; track event.id) {
-                <app-event [event]="event"/>
+                <app-event [event]="event" [isLoggedIn]="isLoggedIn"/>
                 }
         </ul>
     </section>

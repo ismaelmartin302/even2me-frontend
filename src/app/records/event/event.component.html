@@ -8,11 +8,11 @@
                     <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
                 <span class="fw-bold text-primary">{{event.name}}</span>
                 </div>
-                <div class="dropend">
+                <div class="dropend" (click)="$event.stopPropagation()">
                     <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <fa-icon [icon]="['fas', 'bars']" class="text-secondary"></fa-icon>
                     </button>
-                    <ul class="dropdown-menu list-unstyled bg-dark rounded-5 py-3 px-4" style="width:max-content;" aria-labelledby="dropdownMenuButton1">
+                    <ul class="dropdown-menu list-unstyled bg-dark rounded-5 py-3 px-4" (click)="$event.stopPropagation()" style="width:max-content;" aria-labelledby="dropdownMenuButton1">
                             <a href="https://www.google.es/maps/search/{{event.location}}" class="text-decoration-none text-info">
                                 <li class="text-break"> <fa-icon [icon]="['fas', 'location-dot']"></fa-icon> {{event.location}}</li>
                             </a>
@@ -32,7 +32,7 @@
                             
 
                             @if (canDeleteEvent()) {
-                                <button class="btn btn-danger" (click)="openDeleteModal()">Eliminar Evento</button>
+                                <button class="btn btn-danger" (click)="openDeleteModal(); $event.stopPropagation()">Eliminar Evento</button>
                             }
                       </ul>
                 </div>
@@ -40,10 +40,10 @@
             <main class="d-flex flex-column gap-2">
                 {{event.description}}
                 @if (event.picture) {
-                    <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;" (click)="mostrar_imagen()">
+                    <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;" (click)="mostrar_imagen(); $event.stopPropagation()">
                     @if (imagen_visible) {
-                        <div class="w-100 h-100 position-fixed bg-black opacity-25  top-0 end-0 bottom-0 start-0 m-auto z-2" (click)="ocultar_imagen()"></div>
-                        <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 position-fixed top-0 end-0 bottom-0 start-0 m-auto z-3" (click)="ocultar_imagen()">
+                        <div class="w-100 h-100 position-fixed bg-black opacity-25  top-0 end-0 bottom-0 start-0 m-auto z-2" (click)="ocultar_imagen(); $event.stopPropagation()"></div>
+                        <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 position-fixed top-0 end-0 bottom-0 start-0 m-auto z-3" (click)="ocultar_imagen(); $event.stopPropagation()">
                     }
                 }
             </main>
@@ -74,10 +74,10 @@
                 <h2>Confirmar eliminación</h2>
                 <p>¿Estás seguro de que deseas eliminar este evento?</p>
                 <div class="d-flex justify-content-around">
-                    <button (click)="deleteEvent()" class="btn d-none d-sm-block btn-danger">Eliminar</button>
-                    <button (click)="closeDeleteModal()" class="btn d-none d-sm-block btn-secondary">Cancelar</button>
-                    <button (click)="deleteEvent()" class="btn d-block d-sm-none btn-danger"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
-                    <button (click)="closeDeleteModal()" class="btn d-block d-sm-none btn-secondary"><fa-icon [icon]="['fas', 'xmark']"></fa-icon></button>
+                    <button (click)="deleteEvent(); $event.stopPropagation()" class="btn d-none d-sm-block btn-danger">Eliminar</button>
+                    <button (click)="closeDeleteModal(); $event.stopPropagation()" class="btn d-none d-sm-block btn-secondary">Cancelar</button>
+                    <button (click)="deleteEvent(); $event.stopPropagation()" class="btn d-block d-sm-none btn-danger"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
+                    <button (click)="closeDeleteModal(); $event.stopPropagation()" class="btn d-block d-sm-none btn-secondary"><fa-icon [icon]="['fas', 'xmark']"></fa-icon></button>
                 </div>
             </div>
         </div>
