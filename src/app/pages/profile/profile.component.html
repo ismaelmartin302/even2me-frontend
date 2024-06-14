@@ -15,9 +15,12 @@
                         <button (click)="followUser()" class="btn btn-primary">Seguir</button>
                     } @else if (isFollowing()) {
                         <button (click)="unfollowUser()" class="btn btn-outline-primary">Dejar de Seguir</button>
+                    }  
+                    </div>
                     }
-                </div>
-            }
+            @if (sameUser) {
+                <button (click)="editProfile()" class="btn btn-outline-primary">Editar Perfil</button>
+                }
         </div>
         <div>
             <div>

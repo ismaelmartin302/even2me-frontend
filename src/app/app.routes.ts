@@ -11,6 +11,7 @@ import { PublishComponent } from './records/event/publish/publish.component';
 import { authGuard } from './auth.guard';
 import { GuestGuard } from './guest.guard';
 import { PostComponent } from './pages/post/post.component';
+import { ProfileEditComponent } from './pages/profile-edit/profile-edit.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
@@ -25,6 +26,7 @@ export const routes: Routes = [
     { path: 'user/:username', component: ProfileComponent },
     { path: 'event/:id', component: PostComponent },
     { path: 'post', component: PublishComponent, canActivate: [authGuard] },
+    { path: 'profile/edit', component: ProfileEditComponent, canActivate: [authGuard] },
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: '404', pathMatch: 'full' },

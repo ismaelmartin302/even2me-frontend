@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription | undefined;
   isLoggedIn: boolean = false;
   currentUserId: number | null = null;
+  sameUser: boolean = false;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -51,6 +52,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.authService.getUser().subscribe(user => {
       if (user) {
         this.currentUserId = user.id;
+        this.sameUser = true;
       }
     });
     this.userSubscription = this.route.paramMap.pipe(
@@ -197,5 +199,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.followers = this.followers.filter(follower => follower.follower_id !== this.currentUserId);
       });
     }
+  }
+  editProfile(): void {
+    this.router.navigate(['/profile/edit']);
   }
 }

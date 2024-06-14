@@ -47,7 +47,9 @@ export class UsersApiService {
   followUser(followerId: number, followingId: number): Observable<any> {
     return this.httpClient.post(`${this.url}followers`, { follower_id: followerId, following_id: followingId });
   }
-
+  updateUser(userId: number, userData: FormData): Observable<any> {
+    return this.httpClient.put<IApiResponseUser>(`${this.url}users/${userId}`, userData);
+  }
   unfollowUser(followerId: number, followingId: number): Observable<any> {
     return this.httpClient.request('delete', `${this.url}followers`, {
       body: { follower_id: followerId, following_id: followingId }
