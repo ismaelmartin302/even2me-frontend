@@ -62,11 +62,16 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.profileForm.valid && this.user) {
-      const userData = this.profileForm.value;
+      const formData = new FormData();
+      Object.keys(this.profileForm.value).forEach(key => {
+        formData.append(key, this.profileForm.value[key]);
+      });
 
-      this.usersApiService.updateUser(this.user.id, userData).subscribe(
+      if (this.selectedFile) {
+        formData.append('avatar', this.selectedFile, this.selectedFile.name);
+      }
+      this.usersApiService.updateUser(this.user.id, formData).subscribe(
         () => {
-          console.log('Profile updated successfully');
           this.router.navigate(['/profile']);
         },
         error => {

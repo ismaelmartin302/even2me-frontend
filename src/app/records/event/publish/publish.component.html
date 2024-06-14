@@ -34,12 +34,12 @@
           <label for="picture">Imagen</label>
           <input type="file" id="picture" class="form-control bg-black rounded-4" (change)="onFileSelect($event)" style="opacity: 0; position: absolute; z-index: -1;">
           @if (selectedFile) {
-            <label for="picture" class="btn btn-primary" style="width: fit-content;">Imagen seleccionada</label>
+            <label for="picture" class="btn btn-outline-primary" style="width: fit-content;">Imagen seleccionada</label>
             <div class="mt-2">
               <img [src]="selectedFile" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
               </div>
           } @else {
-              <label for="picture" class="btn btn-primary" style="width: fit-content;">Seleccionar archivo</label>
+              <label for="picture" class="btn btn-outline-primary" style="width: fit-content;">Seleccionar archivo</label>
           }
         </div>
         <label for="price">Precio</label>
