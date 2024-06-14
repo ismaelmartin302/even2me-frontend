@@ -32,7 +32,7 @@ export class UsersApiService {
     return this.httpClient.get<IApiResponseFollowing[]>(`${this.url}users/nick/${username}/followings`);
   }
 
-  createEvent(eventData: IApiResponseEvent): Observable<IApiResponseEvent> {
+  createEvent(eventData: FormData): Observable<IApiResponseEvent> {
     return this.httpClient.post<IApiResponseEvent>(this.url + 'events', eventData);
   }
   likeEvent(eventId: number, userId: number): Observable<any> {

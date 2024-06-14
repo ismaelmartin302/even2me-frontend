@@ -30,6 +30,18 @@
             <div class="text-danger">La ubicación es requerida</div>
           }
         </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="picture">Imagen</label>
+          <input type="file" id="picture" class="form-control bg-black rounded-4" (change)="onFileSelect($event)" style="opacity: 0; position: absolute; z-index: -1;">
+          @if (selectedFile) {
+            <label for="picture" class="btn btn-primary" style="width: fit-content;">Imagen seleccionada</label>
+            <div class="mt-2">
+              <img [src]="selectedFile" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
+              </div>
+          } @else {
+              <label for="picture" class="btn btn-primary" style="width: fit-content;">Seleccionar archivo</label>
+          }
+        </div>
         <label for="price">Precio</label>
         <div class="d-flex gap-3 mb-3" role="group">
           <input type="radio" class="btn-check" id="free" formControlName="price" value="0" (change)="onPriceChange('0')">

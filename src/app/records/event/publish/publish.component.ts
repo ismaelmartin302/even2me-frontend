@@ -21,6 +21,7 @@ export class PublishComponent implements OnInit, OnDestroy {
   customCapacitySelected = false;
   customPriceSelected = false;
   private userSubscription: Subscription | undefined;
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -33,8 +34,8 @@ export class PublishComponent implements OnInit, OnDestroy {
       description: ['', Validators.required],
       location: ['', Validators.required],
       price: ['', Validators.required],
-      capacity: [''],
-      category: [''],
+      capacity: ['', Validators.required],
+      category: ['', Validators.required],
       picture: [''],
       website: [''],
       starts_at: ['', [Validators.required, this.dateValidator]],
@@ -65,7 +66,16 @@ export class PublishComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.eventForm.valid) {
-      this.usersApiService.createEvent(this.eventForm.value).subscribe(
+      const formData = new FormData();
+      Object.keys(this.eventForm.controls).forEach(key => {
+        if (key !== 'picture') {
+          formData.append(key, this.eventForm.get(key)?.value);
+        }
+      });
+      if (this.selectedFile) {
+        formData.append('picture', this.selectedFile, this.selectedFile.name);
+      }
+      this.usersApiService.createEvent(formData).subscribe(
         (event: IApiResponseEvent) => {
           this.router.navigate(['/home']);
         },
@@ -127,5 +137,16 @@ export class PublishComponent implements OnInit, OnDestroy {
       return { 'finishDateBeforeStartDate': true };
     }
     return null;
+  }
+  onFileSelect(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedFile = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }
