@@ -47,17 +47,17 @@
     }
   </li>
   }
-  <!-- @if (this.isLoggedIn) {
+  @if (this.isLoggedIn) {
     <li>
-      @if (this.router.url == '/options') {
-      <a routerLink="/options" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
-        <i class="bi bi-gear"></i>
+      @if (this.router.url == '/notifications') {
+      <a routerLink="/notifications" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Me gustas">
+        <fa-icon [icon]="['far', 'heart']"></fa-icon>
       </a>
       } @else {
-      <a routerLink="/options" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Ajustes">
-        <i class="bi bi-gear"></i>
+      <a routerLink="/notifications" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Me gustas">
+        <fa-icon [icon]="['far', 'heart']"></fa-icon>
       </a>
       }
     </li>
-  } -->
+  }
 </ul>

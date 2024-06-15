@@ -1,1 +1,59 @@
-<p>notifications works!</p>
+@if (likes.length > 0) {
+<h3 class="mt-2">Eventos que te interesan</h3>
+    @for (like of likes; track like) {
+<hr>
+<div class="d-flex gap-3 mt-2 mb-2">
+    <img src="{{'http://127.0.0.1:8000/storage/' + like.user.avatar}}" class="avatar-sm clickable" alt=""
+        (click)="goToUserProfile(like.user.username)">
+    <main class="flex-grow-1 d-flex flex-column gap-3 clickable" (click)="goToEvent(like.id)">
+        <header class="d-flex justify-content-between">
+            <div class="d-flex flex-column gap-2">
+                <span class="fw-bold clickable"
+                    (click)="goToUserProfile(like.user.username); $event.stopPropagation()">{{like.user.nickname}}</span>
+                <span class="fw-bold text-primary">{{like.name}}</span>
+            </div>
+            <div class="dropend" (click)="$event.stopPropagation()">
+                <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <fa-icon [icon]="['fas', 'bars']" class="text-secondary"></fa-icon>
+                </button>
+                <ul class="dropdown-menu list-unstyled bg-dark rounded-5 py-3 px-4 z-1" (click)="$event.stopPropagation()"
+                    style="width:max-content;" aria-labelledby="dropdownMenuButton1">
+                    <a href="https://www.google.es/maps/search/{{like.location}}"
+                        class="text-decoration-none text-info">
+                        <li class="text-break"> <fa-icon [icon]="['fas', 'location-dot']"></fa-icon>
+                            {{like.location}}</li>
+                    </a>
+                    @if (isNaN(like.price)) {
+                    <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success">
+                            Gratuito </span></li>
+                    } @else {
+                    <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success">
+                            {{like.price}} € </span></li>
+                    }
+                    @if (isNaN(like.capacity)) {
+                    <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span
+                            class="text-success"> Sin aforo</span> </li>
+                    } @else if (like.current_attendees >= like.capacity) {
+                    <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span
+                            class="text-danger"> Lleno</span> </li>
+                    } @else {
+                    <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon>
+                        {{like.current_attendees}} / {{like.capacity}} </li>
+                    }
+                    <li class="text-break"> <fa-icon [icon]="['fas', 'link']"></fa-icon> <a class="link-primary ms-1"
+                            href="{{like.website}}">Sitio Web</a> </li>
+                </ul>
+            </div>
+        </header>
+        <main class="d-flex flex-column gap-2">
+            {{like.description}}
+            @if (like.picture) {
+            <img src="{{'http://127.0.0.1:8000/storage/' + like.picture}}"
+                class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
+            }
+        </main>
+    </main>
+</div>
+}
+}

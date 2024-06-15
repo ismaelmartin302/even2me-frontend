@@ -58,4 +58,7 @@ export class UsersApiService {
   searchUsers(query: string): Observable<IApiResponseUser[]> {
     return this.httpClient.get<IApiResponseUser[]>(`${this.url}user/search`, { params: { query } });
   }
+  getUserLikes(userId: number): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.url}users/${userId}/likes`);
+  }
 }
