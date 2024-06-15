@@ -18,8 +18,9 @@
             <div class="text-danger">El nombre es requerido</div>
           }
         </div>
-        <div class="mb-3">
-          <textarea class="form-control bg-black rounded-4" placeholder="Descripción" formControlName="description" rows="3"></textarea>
+        <div class="mb-3 position-relative">
+          <textarea id="description" class="form-control bg-black rounded-4" placeholder="Descripción" formControlName="description" rows="3"></textarea>
+          <button type="button" class="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2" (click)="generateDescription()">IA</button>
           @if (eventForm.get('description')?.invalid && eventForm.get('description')?.touched) {
             <div class="text-danger">La descripción es requerida</div>
           }

@@ -7,10 +7,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserService } from '../../../services/user.service';
 import { IApiResponseUser } from '../../../services/models/user-api.interface';
 import { Subscription } from 'rxjs';
+import { TextIaApiService } from '../../../services/text-ia-api.service';
 
 @Component({
   selector: 'app-publish',
   standalone: true,
+  providers: [TextIaApiService],
   imports: [ReactiveFormsModule, FontAwesomeModule],
   templateUrl: './publish.component.html',
   styleUrls: ['./publish.component.scss']
@@ -27,7 +29,8 @@ export class PublishComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private usersApiService: UsersApiService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private textIaApiService: TextIaApiService,
   ) {
     this.eventForm = this.fb.group({
       name: ['', Validators.required],
@@ -147,6 +150,17 @@ export class PublishComponent implements OnInit, OnDestroy {
         this.selectedFile = e.target.result;
       };
       reader.readAsDataURL(file);
+    }
+  }
+  generateDescription(): void {
+    const eventName = this.eventForm.get('name')?.value;
+    if (eventName) {
+      this.textIaApiService.getText(eventName).subscribe((response: any) => {
+        if (response.status === 'success' && response.data && response.data.outputs && response.data.outputs.length > 0) {
+          const description = response.data.outputs[0].text;
+          this.eventForm.patchValue({ description });
+        }
+      });
     }
   }
 }
