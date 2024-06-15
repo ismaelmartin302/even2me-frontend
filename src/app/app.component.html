@@ -5,16 +5,18 @@
             <img src="assets/even2me-solid.svg" class="img-fluid clickable" style="width: 2em;">
         </div>
         <div class="col flex-grow-1 d-flex d-none d-sm-block col mt-3">
-            
         </div>
         <div class="col-4 flex-grow-1 d-flex justify-content-center flex-column z-1">
             <router-outlet></router-outlet>
         </div>
         <div class="col-sm d-none d-xl-block">
-            <div class="d-flex position-fixed end-0 me-3 mt-3 gap-2">
+            <div class="d-flex position-fixed end-0 me-3 mt-3 gap-2 z-3">
                 @if (!isLoggedIn && this.router.url != '/login' && this.router.url != '/register') {
                     <a routerLink="/login" class="btn btn-sm rounded-pill btn-outline-primary p-1 pe-3 ps-3 fs-6">Iniciar Sesion</a>
                     <a routerLink="/register" class="btn btn-sm rounded-pill btn-primary p-1 pe-3 ps-3 fs-6">Crear Cuenta</a>
+                }
+                @else if (isLoggedIn && this.router.url != '/search') {
+                    <app-explore></app-explore>
                 }
             </div> 
         </div>

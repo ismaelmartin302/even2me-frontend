@@ -9,12 +9,13 @@ import { UsersApiService } from './services/users-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { SharedService } from './services/shared.service';
+import { ExploreComponent } from './pages/explore/explore.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [UsersApiService, AuthService],
-  imports: [RouterOutlet, FontAwesomeModule, MenuComponent, HttpClientModule, RouterLink],
+  imports: [RouterOutlet, FontAwesomeModule, MenuComponent, HttpClientModule, RouterLink, ExploreComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

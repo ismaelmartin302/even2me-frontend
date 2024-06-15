@@ -20,7 +20,7 @@ export const routes: Routes = [
     { path: 'search', component: ExploreComponent },
     { path: 'notifications', component: NotificationsComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
-    { path: 'options', component: OptionsComponent, canActivate: [authGuard] },
+    // { path: 'options', component: OptionsComponent, canActivate: [authGuard] },
     { path: '404', component: Error404Component },
 
     { path: 'user/:username', component: ProfileComponent },

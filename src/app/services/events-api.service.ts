@@ -18,4 +18,7 @@ export class EventsApiService {
   deleteEvent(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.url}events/${id}`);
   }
+  searchEvents(query: string): Observable<IApiResponseEvent[]> {
+    return this.httpClient.get<IApiResponseEvent[]>(`${this.url}event/search`, { params: { query } });
+  }
 }

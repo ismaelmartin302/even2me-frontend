@@ -55,4 +55,7 @@ export class UsersApiService {
       body: { follower_id: followerId, following_id: followingId }
     });
   }
+  searchUsers(query: string): Observable<IApiResponseUser[]> {
+    return this.httpClient.get<IApiResponseUser[]>(`${this.url}user/search`, { params: { query } });
+  }
 }
