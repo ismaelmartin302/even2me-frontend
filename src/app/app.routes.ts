@@ -18,7 +18,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
     { path: 'home', component: HomeComponent },
     { path: 'search', component: ExploreComponent },
-    { path: 'notifications', component: NotificationsComponent },
+    { path: 'notifications', component: NotificationsComponent, canActivate: [authGuard] },
     { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
     // { path: 'options', component: OptionsComponent, canActivate: [authGuard] },
     { path: '404', component: Error404Component },
