@@ -1,0 +1,45 @@
+<div class="container border-0 mt-4">
+    <div class="card bg-black p-4 shadow-sm">
+      <div class="card-header bg-black d-flex justify-content-between align-items-center">
+        <span class="fw-bold">Personalizar Perfil</span>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <input id="username" class="form-control bg-black rounded-4" placeholder="Nombre de Usuario" formControlName="username">
+            @if (profileForm.get('username')?.invalid && profileForm.get('username')?.touched) {
+              <div class="text-danger">El nombre de usuario es requerido</div>
+            }
+          </div>
+          <div class="mb-3">
+            <input id="nickname" class="form-control bg-black rounded-4" placeholder="Nickname" formControlName="nickname">
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control bg-black rounded-4" placeholder="Biografía" formControlName="biography" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <input id="location" class="form-control bg-black rounded-4" placeholder="Ubicación" formControlName="location">
+          </div>
+          <div class="mb-3">
+            <input id="website" class="form-control bg-black rounded-4" placeholder="Sitio Web" formControlName="website">
+          </div>
+          <div class="mb-3 d-flex flex-column">
+            <label for="avatar">Imagen</label>
+            <input type="file" id="avatar" class="form-control bg-black rounded-4" (change)="onFileSelect($event)" style="opacity: 0; position: absolute; z-index: -1;">
+            @if (selectedImage) {
+              <label for="avatar" class="btn btn-outline-primary" style="width: fit-content;">Imagen seleccionada</label>
+              <div class="mt-2">
+                <img [src]="selectedImage" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
+                </div>
+            } @else {
+                <label for="avatar" class="btn btn-outline-primary" style="width: fit-content;">Seleccionar archivo</label>
+            }
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

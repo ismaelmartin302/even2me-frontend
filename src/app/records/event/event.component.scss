@@ -1,0 +1,30 @@
+@import 'var';
+
+.likes, .comments, .retweet, .share {
+    cursor: pointer;
+    color: $secondary;
+}
+
+.likes {
+    &:hover {
+        color: $primary;
+    }
+}
+
+.comments {
+    &:hover {
+        color: $orange;
+    }
+}
+
+.retweet {
+    &:hover {
+        color: $green;
+    }
+}
+
+.share {
+    &:hover {
+        color: $blue;
+    }
+}

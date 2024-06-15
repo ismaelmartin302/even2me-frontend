@@ -1,0 +1,85 @@
+@if (event && event.user) {
+    <hr>
+    <div class="d-flex gap-3 mt-2 mb-2">
+        <img src="{{'http://127.0.0.1:8000/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
+        <main class="flex-grow-1 d-flex flex-column gap-3 clickable" (click)="goToEvent(event.id)">
+            <header class="d-flex justify-content-between">
+                <div class="d-flex flex-column gap-2">
+                    <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username); $event.stopPropagation()">{{event.user.nickname}}</span>
+                <span class="fw-bold text-primary">{{event.name}}</span>
+                </div>
+                <div class="dropend" (click)="$event.stopPropagation()">
+                    <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <fa-icon [icon]="['fas', 'bars']" class="text-secondary"></fa-icon>
+                    </button>
+                    <ul class="dropdown-menu list-unstyled bg-dark rounded-5 py-3 px-4" (click)="$event.stopPropagation()" style="width:max-content;" aria-labelledby="dropdownMenuButton1">
+                            <a href="https://www.google.es/maps/search/{{event.location}}" class="text-decoration-none text-info">
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'location-dot']"></fa-icon> {{event.location}}</li>
+                            </a>
+                            @if (isNaN(event.price)) {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success"> Gratuito </span></li>
+                            } @else {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'coins']"></fa-icon> <span class="text-success"> {{event.price}} € </span></li>
+                            }
+                            @if (isNaN(event.capacity)) {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span class="text-success"> Sin aforo</span> </li>
+                            } @else if (event.current_attendees >= event.capacity) {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> <span class="text-danger"> Lleno</span> </li>
+                            } @else {
+                                <li class="text-break"> <fa-icon [icon]="['fas', 'user-group']"></fa-icon> {{event.current_attendees}} / {{event.capacity}} </li>
+                            }
+                            <li class="text-break"> <fa-icon [icon]="['fas', 'link']"></fa-icon> <a class="link-primary ms-1" href="{{event.website}}">Sitio Web</a> </li>
+                            
+
+                            @if (canDeleteEvent()) {
+                                <button class="btn btn-danger" (click)="openDeleteModal(); $event.stopPropagation()">Eliminar Evento</button>
+                            }
+                      </ul>
+                </div>
+            </header>
+            <main class="d-flex flex-column gap-2">
+                {{event.description}}
+                @if (event.picture) {
+                    <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;" (click)="mostrar_imagen(); $event.stopPropagation()">
+                    @if (imagen_visible) {
+                        <div class="w-100 h-100 position-fixed bg-black opacity-25  top-0 end-0 bottom-0 start-0 m-auto z-2" (click)="ocultar_imagen(); $event.stopPropagation()"></div>
+                        <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 position-fixed top-0 end-0 bottom-0 start-0 m-auto z-3" (click)="ocultar_imagen(); $event.stopPropagation()">
+                    }
+                }
+            </main>
+            <footer>
+                <nav>
+                    <ul class="nav justify-content-around">
+                        <li class="likes" (click)="toggleLike(); $event.stopPropagation()" [ngClass]="{'text-primary': isLiked()}">
+                            <fa-icon [icon]="isLiked() ? ['fas', 'heart'] : ['far', 'heart']" ></fa-icon>
+                            {{event.likes_count}}
+                        </li>                        
+                        <li class="comments" (click)="scrollToComments(event.id); $event.stopPropagation()">
+                            <fa-icon [icon]="['far', 'comment']"></fa-icon>
+                            {{event.comments_count}}
+                        </li>
+<!--                         <li class="share">
+                            <i class="bi bi-share"></i>
+                        </li> -->
+                    </ul>
+                </nav>
+            </footer>
+        </main>
+    </div>
+
+    @if (showDeleteModal) {
+        <div class="d-flex position-fixed w-100 h-100 justify-content-center align-items-center top-0 bottom-0 start-0 end-0 m-auto z-2 bg-opacity-10 bg-black">
+
+            <div class="bg-dark p-5 rounded-5">
+                <h2>Confirmar eliminación</h2>
+                <p>¿Estás seguro de que deseas eliminar este evento?</p>
+                <div class="d-flex justify-content-around">
+                    <button (click)="deleteEvent(); $event.stopPropagation()" class="btn d-none d-sm-block btn-danger">Eliminar</button>
+                    <button (click)="closeDeleteModal(); $event.stopPropagation()" class="btn d-none d-sm-block btn-secondary">Cancelar</button>
+                    <button (click)="deleteEvent(); $event.stopPropagation()" class="btn d-block d-sm-none btn-danger"><fa-icon [icon]="['fas', 'check']"></fa-icon></button>
+                    <button (click)="closeDeleteModal(); $event.stopPropagation()" class="btn d-block d-sm-none btn-secondary"><fa-icon [icon]="['fas', 'xmark']"></fa-icon></button>
+                </div>
+            </div>
+        </div>
+    }
+}

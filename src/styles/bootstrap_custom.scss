@@ -1,0 +1,19 @@
+@import 'var';
+/* Cursor pointer */
+.link-primary, .link-secondary {
+    cursor: pointer !important;
+}
+
+.link-secondary {
+    &:hover {
+        color: $primary !important;
+    }
+}
+
+.btn-primary {
+    transition: 300ms;
+    &:hover {
+        background-color: darken($primary, 5%);
+        transition: 300ms;   
+    }
+}

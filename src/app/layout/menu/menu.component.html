@@ -1,0 +1,63 @@
+<ul class="nav justify-content-around">
+  <li>
+    @if (this.router.url == '/home') {
+    <a routerLink="/home" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Inicio">
+      <fa-icon [icon]="['fas', 'house']"></fa-icon>
+    </a>
+    } @else {
+    <a routerLink="/home" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Inicio">
+      <fa-icon [icon]="['fas', 'house']"></fa-icon>
+    </a>
+    }
+  </li>
+  @if (!this.isLoggedIn && this.router.url != '/login' && this.router.url != '/register') {
+    <li class="d-block d-xl-none">
+      <a routerLink="/login" class="rounded-pill btn btn-primary d-flex">
+        Iniciar Sesion</a>
+    </li>
+  }
+  <li>
+    @if (this.router.url == '/search') {
+    <a routerLink="/search" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Descubrir">
+      <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+    </a>
+    } @else {
+    <a routerLink="/search" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Descubrir">
+      <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+    </a>
+    }
+  </li>
+  @if (this.isLoggedIn) {
+    <li class="d-block d-xl-none">
+      <a routerLink="/post" class="rounded-circle btn btn-primary d-flex gap-2 align-items-center" style="width: 3em; height: 3em;">
+        <fa-icon [icon]="['fas', 'plus']" class="fs-4 m-auto"></fa-icon></a>
+    </li>
+  }
+
+  @if (this.isLoggedIn) {
+  <li>
+    @if (this.router.url == '/profile') {
+    <a routerLink="/profile" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Perfil">
+      <fa-icon [icon]="['far', 'user']"></fa-icon>
+    </a>
+    } @else {
+    <a routerLink="/profile" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Perfil">
+      <fa-icon [icon]="['far', 'user']"></fa-icon>
+    </a>
+    }
+  </li>
+  }
+  @if (this.isLoggedIn) {
+    <li>
+      @if (this.router.url == '/notifications') {
+      <a routerLink="/notifications" class="link-primary rounded text-decoration-none h5 d-flex gap-2" title="Me gustas">
+        <fa-icon [icon]="['far', 'heart']"></fa-icon>
+      </a>
+      } @else {
+      <a routerLink="/notifications" class="link-secondary rounded text-decoration-none h5 d-flex gap-2" title="Me gustas">
+        <fa-icon [icon]="['far', 'heart']"></fa-icon>
+      </a>
+      }
+    </li>
+  }
+</ul>

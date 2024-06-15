@@ -1,0 +1,14 @@
+.publicar_boton {
+    
+    &:hover {
+        border-radius: 10em !important;
+        width: 8em !important;
+        span {
+            transition: 300ms;
+            opacity: 100%;
+        }
+    }
+    span {
+        opacity: 0;
+    }
+}

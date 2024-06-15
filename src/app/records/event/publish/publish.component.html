@@ -1,0 +1,133 @@
+<div class="container border-0 mt-4">
+  <div class="card bg-black p-4 shadow-sm">
+    <div class="card-header bg-black d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        @if (user) {
+          <img [src]="'http://127.0.0.1:8000/storage/' + user.avatar" class="avatar-sm rounded-circle me-3" alt="User Avatar">
+        } @else {
+          <div class="avatar-sm rounded-circle me-3"> </div>
+        }
+        <span class="fw-bold">Crear Evento</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <input id="name" class="form-control bg-black rounded-4" placeholder="Nombre del Evento" formControlName="name">
+          @if (eventForm.get('name')?.invalid && eventForm.get('name')?.touched) {
+            <div class="text-danger">El nombre es requerido</div>
+          }
+        </div>
+        <div class="mb-3 position-relative">
+          <textarea id="description" class="form-control bg-black rounded-4" placeholder="Descripción" formControlName="description" rows="3"></textarea>
+          <button type="button" class="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2" (click)="generateDescription()">IA</button>
+          @if (eventForm.get('description')?.invalid && eventForm.get('description')?.touched) {
+            <div class="text-danger">La descripción es requerida</div>
+          }
+        </div>
+        <div class="mb-3">
+          <input id="location" class="form-control bg-black rounded-4" placeholder="Ubicación" formControlName="location">
+          @if (eventForm.get('location')?.invalid && eventForm.get('location')?.touched) {
+            <div class="text-danger">La ubicación es requerida</div>
+          }
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="picture">Imagen</label>
+          <input type="file" id="picture" class="form-control bg-black rounded-4" (change)="onFileSelect($event)" style="opacity: 0; position: absolute; z-index: -1;">
+          @if (selectedFile) {
+            <label for="picture" class="btn btn-outline-primary" style="width: fit-content;">Imagen seleccionada</label>
+            <div class="mt-2">
+              <img [src]="selectedFile" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
+              </div>
+          } @else {
+              <label for="picture" class="btn btn-outline-primary" style="width: fit-content;">Seleccionar archivo</label>
+          }
+        </div>
+        <label for="price">Precio</label>
+        <div class="d-flex gap-3 mb-3" role="group">
+          <input type="radio" class="btn-check" id="free" formControlName="price" value="0" (change)="onPriceChange('0')">
+          <label class="btn btn-outline-info rounded-pill w-100" for="free">Gratis</label>
+
+          @if (customPriceSelected) {
+            <input id="customPriceInput" type="number" class="btn btn-primary rounded-pill w-100" formControlName="price">
+          } @else {
+            <input type="radio" class="btn-check" id="customPrice" formControlName="price" value="custom" (change)="onPriceChange('custom')">
+            <label class="btn btn-outline-primary rounded-pill w-100" for="customPrice">Personalizado</label>
+          }
+        </div>
+        <label for="capacity">Capacidad</label>
+        <div class="d-flex gap-3 mb-3 align-items-center flex-sm-wrap flex-lg-nowrap" role="group">
+          <input type="radio" class="btn-check" id="unlimited" formControlName="capacity" value="0" (change)="onCapacityChange('0')">
+          <label class="btn btn-outline-info rounded-pill w-100" for="unlimited">Ilimitada</label>
+
+          <input type="radio" class="btn-check" id="ten" formControlName="capacity" value="10" (change)="onCapacityChange('10')">
+          <label class="btn btn-outline-success rounded-pill w-100" for="ten">10 <fa-icon [icon]="['fas', 'user']" class="d-none d-sm-block"></fa-icon> </label>
+
+          <input type="radio" class="btn-check" id="hundred" formControlName="capacity" value="100" (change)="onCapacityChange('100')">
+          <label class="btn btn-outline-danger rounded-pill w-100" for="hundred">100 <fa-icon [icon]="['fas', 'user']" class="d-none d-sm-block"></fa-icon> </label>
+
+        @if (customCapacitySelected) {
+            <input id="customCapacity" type="number" class="btn btn-primary rounded-pill w-100" formControlName="capacity">
+            } @else {
+              <input type="radio" class="btn-check" id="custom" formControlName="capacity" value="personalizada" (change)="onCapacityChange('personalizada')">
+              <label class="btn btn-outline-primary rounded-pill w-100" for="custom">Personalizada</label>
+      }
+          </div>
+        <div class="mb-3">
+          <select id="category" class="form-select bg-black rounded-4" formControlName="category">
+            <option value="" disabled selected>Seleccionar Categoría</option>
+            <option value="Música">Música</option>
+            <option value="Deportes">Deportes</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Juventud">Juventud</option>
+            <option value="Salud">Salud</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <input id="website" class="form-control bg-black rounded-4" placeholder="Sitio Web" formControlName="website">
+        </div>
+        <div class="mb-3 row">
+          <div class="col mb-3">
+            <label for="starts_at">Fecha de inicio</label>
+            <input id="starts_at" type="datetime-local" class="form-control bg-black rounded-4" formControlName="starts_at" value="3" (change)="onStartDateChange()">
+            @if (eventForm.get('starts_at')?.invalid && eventForm.get('starts_at')?.touched) {
+              <div class="text-danger">
+                @if (eventForm.get('starts_at')?.errors?.['required']) {La fecha de inicio es requerida}
+                @if (eventForm.get('starts_at')?.errors?.['invalidDate']) {La fecha tiene que ser futura}
+              </div>
+            }
+          </div>
+          @if (eventForm.get('starts_at')?.value) {
+            <div class="col mb-3">
+              <label for="finish_in">Fecha de finalización</label>
+              <input id="finish_in" type="datetime-local" class="form-control bg-black rounded-4" formControlName="finish_in">
+              @if (eventForm.get('finish_in')?.invalid && eventForm.get('finish_in')?.touched) {
+                <div class="text-danger">
+                  @if (eventForm.get('finish_in')?.errors?.['finishDateBeforeStartDate']) {La fecha de finalización debe ser posterior a la fecha de inicio}
+                </div>
+              }
+            </div>
+          }
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group" role="group">
+            <!--
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'calendar-alt']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'map-marker-alt']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'dollar-sign']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link p-2">
+              <fa-icon [icon]="['far', 'users']"></fa-icon>
+            </button> -->
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">Postear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

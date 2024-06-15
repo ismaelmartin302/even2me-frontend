@@ -1,0 +1,37 @@
+.avatar-xl, .avatar-lg, .avatar-md, .avatar-sd {
+    border-radius: 50%;
+    object-fit: cover;
+}
+.avatar-xl {
+    width: 8em;
+    height: 8em;
+}
+.avatar-lg {
+    width: 4em;
+    height: 4em;
+}.avatar-md {
+    width: 2.5em;
+    height: 2.5em;
+}.avatar-sm {
+    width: 2em;
+    height: 2em;
+}
+
+.clickable {
+    cursor: pointer !important;
+}
+
+/* ===== Scrollbar CSS ===== */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: $primary #00000000;
+  }
+
+
+  *::-webkit-scrollbar-track {
+    background: #00000000;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: $primary;
+  }

@@ -1,0 +1,56 @@
+<div class="search-container d-flex justify-content-center flex-column mt-3">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="btn-group">
+      <input type="text" formControlName="query" placeholder="Buscar usuario o eventos" class="form-control">
+      @if (this.router.url != '/search') {
+          <button type="submit" class="btn btn-primary">
+            <fa-icon [icon]="['fas', 'search']"></fa-icon>
+          </button>
+        } @else {
+          <button type="submit" class="btn btn-primary">Buscar</button>
+      }
+    </form>
+    
+    @if (searchResults.length > 0) {
+        @if (this.router.url != '/search') {
+        <div class="list-group mt-3 d-flex flex-column gap-1 bg-dark rounded-3 p-2 overflow-y-scroll" style="max-height: 10em;">
+            @for (result of searchResults; track result) {
+                @if (result.username) {
+                    <div (click)="navigateToProfile(result.username)" class="btn rounded-pill d-flex gap-1 align-items-center justify-content-between">
+                        <div class="d-flex gap-1 align-items-center">
+                            <img src="{{'http://127.0.0.1:8000/storage/' + result.avatar}}" class="avatar-sm border border-2 p-1 border-black bg-black rounded-circle ">
+                            {{ result.nickname }}
+                        </div>
+                        <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                    </div>
+                }
+                @if (result.name) {
+                    <div (click)="navigateToEvent(result.id)" class="btn rounded-pill d-flex gap-1 align-items-center justify-content-between">
+                        {{ result.name }}
+                        <fa-icon [icon]="['fas', 'calendar']"></fa-icon>
+                    </div>
+                }
+            }
+        </div>
+        } @else {
+            <div class="list-group mt-3 d-flex flex-column gap-1 bg-dark rounded-3 p-2 overflow-y-scroll" style="max-height: 30em">
+                @for (result of searchResults; track result) {
+                    @if (result.username) {
+                        <div (click)="navigateToProfile(result.username)" class="btn rounded-pill d-flex gap-1 align-items-center justify-content-between">
+                            <div class="d-flex gap-1 align-items-center">
+                                <img src="{{'http://127.0.0.1:8000/storage/' + result.avatar}}" class="avatar-sm border border-2 p-1 border-black bg-black rounded-circle ">
+                                {{ result.nickname }}
+                            </div>
+                            <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                        </div>
+                    }
+                    @if (result.name) {
+                        <div (click)="navigateToEvent(result.id)" class="btn rounded-pill d-flex gap-1 align-items-center justify-content-between">
+                            {{ result.name }}
+                            <fa-icon [icon]="['fas', 'calendar']"></fa-icon>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    }
+  

@@ -1,0 +1,92 @@
+<header class="border-bottom">
+    <img src="http://127.0.0.1:8000/storage/defaultbanner.png" class="img-fluid position-absolute top-0 start-0 w-100 pb-5 d-block d-sm-none object-fit-cover">
+    <nav class="position-relative header_profile">
+        <img src="http://127.0.0.1:8000/storage/defaultbanner.png" class="img-fluid position-absolute top-0 start-0 w-100 h-100 d-none d-sm-block pb-5 object-fit-cover">
+        <div class="position-absolute bottom-0 start-0 ms-3">
+            <img src="{{'http://127.0.0.1:8000/storage/' + user?.avatar}}" class="avatar-xl border border-2 p-1 border-black bg-black ">
+        </div>
+    </nav>
+    <div class="d-flex flex-column gap-2">
+        <div class="d-flex justify-content-between">
+            <span class="h5 fw-bold ms-2 mt-2 text-primary">{{user?.nickname}}</span>
+            @if (isLoggedIn && user?.id !== currentUserId) {
+                <div>
+                    @if (!isFollowing()) {
+                        <button (click)="followUser()" class="btn btn-primary">Seguir</button>
+                    } @else if (isFollowing()) {
+                        <button (click)="unfollowUser()" class="btn btn-outline-primary">Dejar de Seguir</button>
+                    }  
+                    </div>
+                    }
+            @if (isLoggedIn && user?.id == currentUserId) {
+                <button (click)="editProfile()" class="btn btn-outline-primary">Editar Perfil</button>
+                }
+        </div>
+        <div>
+            <div>
+                <span [innerHTML]="getBiography()" (click)="toggleExpand()" class="cursor-pointer"></span>
+              </div>
+        </div>
+        <ul class="text-secondary d-flex list-unstyled gap-2 flex-wrap">
+            <li>
+                <fa-icon [icon]="['fas', 'location-dot']"></fa-icon>
+                 {{user?.location}}
+            </li>
+        </ul>
+
+        <ul class="d-flex gap-3 justify-content-around list-unstyled">
+            <li class="btn p-3 pe-4 ps-4 rounded-pill"><span class="text-primary">{{events.length}}</span> Eventos</li>
+            <li class="btn p-3 pe-4 ps-4 rounded-pill" (click)="toggleFollowersPopup()"><span class="text-primary">{{followers.length}}</span> Seguidores</li>
+            <li class="btn p-3 pe-4 ps-4 rounded-pill" (click)="toggleFollowingsPopup()"><span class="text-primary">{{followings.length}}</span> Siguiendo</li>
+        </ul>
+    </div>
+</header>
+<main class="container mt-4">
+    <section>
+        <ul class="list-unstyled">
+            @for (event of events; track event.id) {
+                <app-event [event]="event" [isLoggedIn]="isLoggedIn"/>
+                }
+        </ul>
+    </section>
+    <section>
+        @if (showFollowersPopup) {
+            <div class="popup" (click)="closePopupOutside($event, 'followers')">
+                <div class="popup-content">
+                    <span class="close" (click)="toggleFollowersPopup()">&times;</span>
+                    <h2>Seguidores</h2>
+                    <div class="scrollable">
+                        <ul class="list-unstyled gap-2 d-flex flex-column">
+                            @for (follower of followers; track follower.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(follower.follower.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + follower.follower.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ follower.follower.nickname }}</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </section>
+    <section>
+        @if (showFollowingsPopup) {
+            <div class="popup" (click)="closePopupOutside($event, 'followings')">
+                <div class="popup-content">
+                    <span class="close" (click)="toggleFollowingsPopup()">&times;</span>
+                    <h2>Siguiendo</h2>
+                    <div class="scrollable">
+                        <ul class="list-unstyled gap-2 d-flex flex-column">
+                            @for (following of followings; track following.id) {
+                                <li class="d-flex align-items-center gap-2 clickable" (click)="goToUserProfile(following.following.username)">
+                                    <img src="{{'http://127.0.0.1:8000/storage/' + following.following.avatar}}" class="avatar-sm">
+                                    <span class="text-white">{{ following.following.nickname }}</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </section>
+</main>
