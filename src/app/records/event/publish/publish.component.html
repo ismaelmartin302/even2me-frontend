@@ -55,15 +55,15 @@
           }
         </div>
         <label for="capacity">Capacidad</label>
-        <div class="d-flex gap-3 mb-3" role="group">
+        <div class="d-flex gap-3 mb-3 align-items-center flex-sm-wrap flex-lg-nowrap" role="group">
           <input type="radio" class="btn-check" id="unlimited" formControlName="capacity" value="0" (change)="onCapacityChange('0')">
           <label class="btn btn-outline-info rounded-pill w-100" for="unlimited">Ilimitada</label>
 
           <input type="radio" class="btn-check" id="ten" formControlName="capacity" value="10" (change)="onCapacityChange('10')">
-          <label class="btn btn-outline-success rounded-pill w-100" for="ten">10 <fa-icon [icon]="['fas', 'user']"></fa-icon> </label>
+          <label class="btn btn-outline-success rounded-pill w-100" for="ten">10 <fa-icon [icon]="['fas', 'user']" class="d-none d-sm-block"></fa-icon> </label>
 
           <input type="radio" class="btn-check" id="hundred" formControlName="capacity" value="100" (change)="onCapacityChange('100')">
-          <label class="btn btn-outline-danger rounded-pill w-100" for="hundred">100 <fa-icon [icon]="['fas', 'user']"></fa-icon> </label>
+          <label class="btn btn-outline-danger rounded-pill w-100" for="hundred">100 <fa-icon [icon]="['fas', 'user']" class="d-none d-sm-block"></fa-icon> </label>
 
         @if (customCapacitySelected) {
             <input id="customCapacity" type="number" class="btn btn-primary rounded-pill w-100" formControlName="capacity">
