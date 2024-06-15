@@ -52,6 +52,7 @@
             <img src="{{'http://127.0.0.1:8000/storage/' + like.picture}}"
                 class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
             }
+            {{like.starts_at | date:"d MMMM h:mm a" }}
         </main>
     </main>
 </div>

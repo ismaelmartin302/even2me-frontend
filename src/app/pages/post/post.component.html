@@ -6,7 +6,26 @@
                 }
         </header>
         <main class="row d-flex gap-2">
-            <aside class="col-1 flex-grow-1">
+            <section class="col-12 col-lg-6 order-1 order-lg-2 flex-grow-1 d-flex flex-column gap-2">
+                <header class="d-flex flex-column gap-3">
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold fs-1">{{event.name}}</span>
+                        <span> <fa-icon [icon]="['far', 'calendar']"></fa-icon> 
+                            {{event.starts_at | date:"d MMMM h:mm a" }}
+                            -
+                            {{event.finish_in | date:"d MMMM h:mm a" }}
+                        </span>
+                    </div>
+                    <nav class="d-flex align-items-center gap-2">
+                        <img src="{{'http://127.0.0.1:8000/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
+                        <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
+                    </nav>
+                </header>
+                <main>
+                    {{event.description}}
+                </main>
+            </section>
+            <aside class="col-12 col-lg-1 order-2 order-lg-1 flex-grow-1">
                 <ul class="list-unstyled bg-dark rounded-5 py-3 px-4 ">
                     <a href="https://www.google.es/maps/search/{{event.location}}" class="text-decoration-none text-info">
                         <li class="text-break"> <fa-icon [icon]="['fas', 'location-dot']"></fa-icon> {{event.location}}</li>
@@ -41,25 +60,6 @@
                         </ul>
                 </nav>
             </aside>
-            <section class="col-6 flex-grow-1 d-flex flex-column gap-2">
-                <header class="d-flex flex-column gap-3">
-                    <div class="d-flex flex-column">
-                        <span class="fw-bold fs-1">{{event.name}}</span>
-                        <span> <fa-icon [icon]="['far', 'calendar']"></fa-icon> 
-                            {{event.starts_at | date:"d MMMM h:mm a" }}
-                            -
-                            {{event.finish_in | date:"d MMMM h:mm a" }}
-                        </span>
-                    </div>
-                    <nav class="d-flex align-items-center gap-2">
-                        <img src="{{'http://127.0.0.1:8000/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
-                        <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
-                    </nav>
-                </header>
-                <main>
-                    {{event.description}}
-                </main>
-            </section>
         </main>
         <hr>
         <footer>

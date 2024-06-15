@@ -3,11 +3,12 @@ import { UsersApiService } from '../../services/users-api.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, DatePipe],
   providers: [UsersApiService, AuthService],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.scss'
