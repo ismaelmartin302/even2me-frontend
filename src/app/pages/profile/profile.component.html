@@ -18,7 +18,7 @@
                     }  
                     </div>
                     }
-            @if (sameUser) {
+            @if (isLoggedIn && user?.id == currentUserId) {
                 <button (click)="editProfile()" class="btn btn-outline-primary">Editar Perfil</button>
                 }
         </div>
