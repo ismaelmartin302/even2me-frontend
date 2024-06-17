@@ -17,7 +17,7 @@
                 @if (result.username) {
                     <div (click)="navigateToProfile(result.username)" class="btn rounded-pill d-flex gap-1 align-items-center justify-content-between">
                         <div class="d-flex gap-1 align-items-center">
-                            <img src="{{'http://127.0.0.1:8000/storage/' + result.avatar}}" class="avatar-sm border border-2 p-1 border-black bg-black rounded-circle ">
+                            <img src="{{'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + result.avatar}}" class="avatar-sm border border-2 p-1 border-black bg-black rounded-circle ">
                             {{ result.nickname }}
                         </div>
                         <fa-icon [icon]="['fas', 'user']"></fa-icon>
@@ -37,7 +37,7 @@
                     @if (result.username) {
                         <div (click)="navigateToProfile(result.username)" class="btn rounded-pill d-flex gap-1 align-items-center justify-content-between">
                             <div class="d-flex gap-1 align-items-center">
-                                <img src="{{'http://127.0.0.1:8000/storage/' + result.avatar}}" class="avatar-sm border border-2 p-1 border-black bg-black rounded-circle ">
+                                <img src="{{'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + result.avatar}}" class="avatar-sm border border-2 p-1 border-black bg-black rounded-circle ">
                                 {{ result.nickname }}
                             </div>
                             <fa-icon [icon]="['fas', 'user']"></fa-icon>

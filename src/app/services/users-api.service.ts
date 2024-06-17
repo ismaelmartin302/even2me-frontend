@@ -6,7 +6,7 @@ import { IApiResponseEvent } from './models/event-api.interface';
 
 export class UsersApiService {
 
-  private readonly url = 'http://127.0.0.1:8000/api/';
+  private readonly url = 'even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/api/';
   httpClient = inject(HttpClient)
   constructor() { }
 

@@ -3,7 +3,7 @@
     @for (like of likes; track like) {
 <hr>
 <div class="d-flex gap-3 mt-2 mb-2">
-    <img src="{{'http://127.0.0.1:8000/storage/' + like.user.avatar}}" class="avatar-sm clickable" alt=""
+    <img src="{{'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + like.user.avatar}}" class="avatar-sm clickable" alt=""
         (click)="goToUserProfile(like.user.username)">
     <main class="flex-grow-1 d-flex flex-column gap-3 clickable" (click)="goToEvent(like.id)">
         <header class="d-flex justify-content-between">
@@ -49,7 +49,7 @@
         <main class="d-flex flex-column gap-2">
             {{like.description}}
             @if (like.picture) {
-            <img src="{{'http://127.0.0.1:8000/storage/' + like.picture}}"
+            <img src="{{'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + like.picture}}"
                 class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
             }
             {{like.starts_at | date:"d MMMM h:mm a" }}
