@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/api';
+  private apiUrl = 'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/api';
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
