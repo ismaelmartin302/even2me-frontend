@@ -26,7 +26,7 @@
             @if (isLoggedIn && this.router.url != '/profile') {
                 <div class="dropdown">
                     <div class="d-flex bottom-0 btn rounded-pill py-2 py-md-1 align-items-center m-3 gap-3" style="width: fit-content;" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img [src]="user?.avatar ? 'http://127.0.0.1:8000/storage/' + user.avatar : 'http://127.0.0.1:8000/storage/default.png'" class="avatar-md">
+                      <img [src]="user?.avatar ? 'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + user.avatar : 'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/default.png'" class="avatar-md">
                       <span class="text-light fw-semibold d-none d-md-block">{{user?.nickname}}</span>
                       <fa-icon [icon]="['fas', 'ellipsis-vertical']" class="m-auto text-secondary d-none d-md-block"></fa-icon>
                     </div>

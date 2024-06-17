@@ -2,7 +2,7 @@
     <div class="container">
         <header class="row mb-3 mt-3">
             @if (event.picture) {
-                <img src="{{'http://127.0.0.1:8000/storage/' + event.picture}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
+                <img src="{{'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + event.picture}}" class="img-fluid rounded-2 object-fit-cover" style="max-height: 20em;">
                 }
         </header>
         <main class="row d-flex gap-2">
@@ -17,7 +17,7 @@
                         </span>
                     </div>
                     <nav class="d-flex align-items-center gap-2">
-                        <img src="{{'http://127.0.0.1:8000/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
+                        <img src="{{'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + event.user.avatar}}" class="avatar-sm clickable" alt="" (click)="goToUserProfile(event.user.username)">
                         <span class="fw-bold clickable" (click)="goToUserProfile(event.user.username)">{{event.user.nickname}}</span>
                     </nav>
                 </header>
@@ -65,7 +65,7 @@
         <footer>
             <h4 id="comments-section"#commentsSection>Commentarios</h4>
             <div class="d-flex gap-3 mt-3 mb-3">
-                <img [src]="'http://127.0.0.1:8000/storage/' + loggedInUser.avatar" class="avatar-sm" alt="">
+                <img [src]="'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + loggedInUser.avatar" class="avatar-sm" alt="">
                 <div class="flex-grow-1">
                     <div class="d-flex align-items-center gap-2">
                         <span class="fw-bold">{{ loggedInUser.nickname }}</span>
@@ -76,7 +76,7 @@
             </div>
             @for (comment of event.comments; track comment) {
                 <div class="d-flex gap-3 mt-3 mb-3">
-                    <img [src]="'http://127.0.0.1:8000/storage/' + comment.user.avatar" (click)="goToUserProfile(comment.user.username)" class="avatar-sm" alt="">
+                    <img [src]="'http://even2me-env.eba-h9cm5deu.eu-west-3.elasticbeanstalk.com/storage/' + comment.user.avatar" (click)="goToUserProfile(comment.user.username)" class="avatar-sm" alt="">
                     <div class="flex-grow-1">
                       <div class="d-flex align-items-center gap-2">
                         <span class="fw-bold" (click)="goToUserProfile(comment.user.username)">{{ comment.user.nickname }}</span>
